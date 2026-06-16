@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { 
   Box, Typography, Card, CardContent, Slider, FormControl, 
   InputLabel, Select, MenuItem, Stack, IconButton, Alert, Snackbar,
@@ -18,6 +18,7 @@ export default function SignDetection() {
   const { token } = useAuth();
   
   const [isRecording, setIsRecording] = useState(false);
+  const activeAudioRef = useRef<HTMLAudioElement | null>(null);
   const [resultText, setResultText] = useState<string>('');
   const [confidence, setConfidence] = useState<number>(0);
   const [predictedWords, setPredictedWords] = useState<string[]>([]);
@@ -120,32 +121,96 @@ export default function SignDetection() {
 
   const speakText = (text: string, langCode: string = 'en') => {
     if (!text || text.trim() === '') return;
+    
+    // Stop any currently playing audio stream
+    if (activeAudioRef.current) {
+      activeAudioRef.current.pause();
+      activeAudioRef.current = null;
+    }
     window.speechSynthesis.cancel();
     
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = speechRate;
-    utterance.volume = speechVolume;
-
     const langObj = LANGUAGES.find(l => l.code === langCode);
     const locale = langObj ? langObj.locale : 'en-US';
-    utterance.lang = locale;
 
-    const availableVoices = window.speechSynthesis.getVoices();
-    let matchingVoice = availableVoices.find(v => v.lang === locale || v.lang.toLowerCase() === locale.toLowerCase().replace('_', '-'));
-    
-    if (!matchingVoice) {
-      matchingVoice = availableVoices.find(v => v.lang.startsWith(langCode + '-') || v.lang.toLowerCase().startsWith(langCode));
+    // If it's English, try to use native speechSynthesis first for lower latency
+    if (langCode === 'en') {
+      const availableVoices = window.speechSynthesis.getVoices();
+      let matchingVoice = availableVoices.find(v => v.lang === locale || v.lang.toLowerCase() === locale.toLowerCase().replace('_', '-'));
+      if (!matchingVoice) {
+        matchingVoice = availableVoices.find(v => v.lang.startsWith('en-') || v.lang.toLowerCase().startsWith('en'));
+      }
+      
+      const selectedVoiceObj = selectedVoice ? availableVoices.find(v => v.name === selectedVoice) : null;
+      const voiceToUse = selectedVoiceObj || matchingVoice;
+
+      if (voiceToUse) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = speechRate;
+        utterance.volume = speechVolume;
+        utterance.lang = locale;
+        utterance.voice = voiceToUse;
+        window.speechSynthesis.speak(utterance);
+        console.log(`Speaking English prediction natively "${text}" using voice: ${voiceToUse.name}`);
+        return;
+      }
     }
 
-    if (matchingVoice) {
-      utterance.voice = matchingVoice;
-      console.log(`Speaking prediction "${text}" using voice: ${matchingVoice.name} (${matchingVoice.lang})`);
-    } else if (selectedVoice && langCode === 'en') {
-      const voice = availableVoices.find(v => v.name === selectedVoice);
-      if (voice) utterance.voice = voice;
-    }
+    // For all non-English languages (or if English native voice is missing), use Google TTS API proxy first
+    console.log(`TTS: Prioritizing Google TTS API via Backend Proxy in SignDetection for language: ${langCode}`);
 
-    window.speechSynthesis.speak(utterance);
+    const fetchTtsAndPlay = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/tts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            text: text,
+            lang: langCode
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`TTS server status ${response.status}`);
+        }
+
+        const blob = await response.blob();
+        const ttsUrl = URL.createObjectURL(blob);
+        const audio = new Audio(ttsUrl);
+        activeAudioRef.current = audio;
+        
+        audio.onended = () => {
+          activeAudioRef.current = null;
+          URL.revokeObjectURL(ttsUrl);
+        };
+        audio.onerror = () => {
+          activeAudioRef.current = null;
+          URL.revokeObjectURL(ttsUrl);
+          fallbackToDefaultVoice();
+        };
+        
+        audio.play().catch(err => {
+          console.error("Google TTS play catch in SignDetection:", err);
+          fallbackToDefaultVoice();
+        });
+      } catch (err) {
+        console.error("Google TTS POST failed in SignDetection:", err);
+        fallbackToDefaultVoice();
+      }
+    };
+
+    const fallbackToDefaultVoice = () => {
+      console.warn("Google TTS fallback in SignDetection. Attempting browser SpeechSynthesis.");
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = speechRate;
+      utterance.volume = speechVolume;
+      utterance.lang = locale;
+      window.speechSynthesis.speak(utterance);
+    };
+
+    fetchTtsAndPlay();
   };
 
   const handleCopy = (textToCopy: string) => {

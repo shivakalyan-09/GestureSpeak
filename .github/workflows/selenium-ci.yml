@@ -66,6 +66,14 @@ jobs:
           path: ./gesturespeak-frontend/e2e/report.html
           retention-days: 14
 
+      - name: Upload Excel/CSV Test Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-excel-report-${{ matrix.browser }}
+          path: ./gesturespeak-frontend/e2e/report.csv
+          retention-days: 14
+
   deploy-report:
     name: Deploy Test Report to GitHub Pages
     needs: e2e-tests

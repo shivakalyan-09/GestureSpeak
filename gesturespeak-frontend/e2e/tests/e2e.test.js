@@ -583,9 +583,14 @@ export default async function runTests(driver, targetUrl) {
     async (step) => {
       step('Navigating to History log page');
       await dashboardPage.clickSidebarHistoryLog();
-      await driver.wait(async () => (await driver.getCurrentUrl()).includes('/history'), 5000);
+      await dashboardPage.waitForHeaderTitle('Prediction Log Archives');
       
       step('Checking total logs count');
+      await driver.wait(async () => {
+        const count = await historyPage.getLogsCount();
+        return count > 0;
+      }, 5000, "Timed out waiting for history logs to load.");
+      
       const startCount = await historyPage.getLogsCount();
       step(`Initial logs count: ${startCount}`);
       

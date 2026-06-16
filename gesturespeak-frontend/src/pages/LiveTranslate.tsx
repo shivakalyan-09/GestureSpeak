@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { 
   Box, Card, CardContent, Typography, TextField, Button, 
   FormControl, InputLabel, Select, MenuItem, Stack, IconButton, Snackbar, Alert, Chip
@@ -27,10 +27,12 @@ export default function LiveTranslate() {
   const [status, setStatus] = useState<string>('Idle'); // 'Idle' | 'Translating' | 'Success' | 'Failed'
   const [speaking, setSpeaking] = useState(false);
 
+  const activeAudioRef = useRef<HTMLAudioElement | null>(null);
+
   // Monitor speaking status
   useEffect(() => {
     const interval = setInterval(() => {
-      setSpeaking(window.speechSynthesis.speaking);
+      setSpeaking(window.speechSynthesis.speaking || (activeAudioRef.current !== null && !activeAudioRef.current.paused));
     }, 200);
 
     // Prime the voices
@@ -87,33 +89,99 @@ export default function LiveTranslate() {
     
     if (!textToSpeak || textToSpeak.trim() === '') return;
     
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    handleStopSpeaking();
     
     const langObj = LANGUAGES.find(l => l.code === langToUse);
     const locale = langObj ? langObj.locale : 'en-US';
-    utterance.lang = locale;
 
-    // Load available voices
-    const voices = window.speechSynthesis.getVoices();
-    let matchingVoice = voices.find(v => v.lang === locale || v.lang.toLowerCase() === locale.toLowerCase().replace('_', '-'));
+    // If it's English, try to use native speechSynthesis first for lower latency
+    if (langToUse === 'en') {
+      const voices = window.speechSynthesis.getVoices();
+      let matchingVoice = voices.find(v => v.lang === locale || v.lang.toLowerCase() === locale.toLowerCase().replace('_', '-'));
+      if (!matchingVoice) {
+        matchingVoice = voices.find(v => v.lang.startsWith('en-') || v.lang.toLowerCase().startsWith('en'));
+      }
+      if (matchingVoice) {
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        utterance.lang = locale;
+        utterance.voice = matchingVoice;
+        utterance.onstart = () => setSpeaking(true);
+        utterance.onend = () => setSpeaking(false);
+        utterance.onerror = () => setSpeaking(false);
+        window.speechSynthesis.speak(utterance);
+        console.log(`TTS: Speaking English natively using voice: ${matchingVoice.name}`);
+        return;
+      }
+    }
+
+    // For all non-English languages (or if English native voice is missing), use Google TTS API proxy first
+    console.log(`TTS: Prioritizing Google TTS API via Backend Proxy for language: ${langToUse}`);
     
-    if (!matchingVoice) {
-      matchingVoice = voices.find(v => v.lang.startsWith(langToUse + '-') || v.lang.toLowerCase().startsWith(langToUse));
-    }
+    const fetchTtsAndPlay = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/tts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            text: textToSpeak,
+            lang: langToUse
+          })
+        });
 
-    if (matchingVoice) {
-      utterance.voice = matchingVoice;
-      console.log(`Speaking "${textToSpeak}" using voice: ${matchingVoice.name} (${matchingVoice.lang})`);
-    } else {
-      console.warn(`No voice accent found for ${locale}. Using default.`);
-    }
+        if (!response.ok) {
+          throw new Error(`TTS server status ${response.status}`);
+        }
 
-    window.speechSynthesis.speak(utterance);
+        const blob = await response.blob();
+        const ttsUrl = URL.createObjectURL(blob);
+        const audio = new Audio(ttsUrl);
+        activeAudioRef.current = audio;
+        
+        setSpeaking(true);
+        audio.onended = () => {
+          setSpeaking(false);
+          activeAudioRef.current = null;
+          URL.revokeObjectURL(ttsUrl);
+        };
+        audio.onerror = () => {
+          setSpeaking(false);
+          activeAudioRef.current = null;
+          URL.revokeObjectURL(ttsUrl);
+          fallbackToDefaultVoice();
+        };
+        
+        audio.play().catch(err => {
+          console.error("Google TTS play catch:", err);
+          fallbackToDefaultVoice();
+        });
+      } catch (err) {
+        console.error("Google TTS POST failed:", err);
+        fallbackToDefaultVoice();
+      }
+    };
+
+    const fallbackToDefaultVoice = () => {
+      console.warn("Google TTS fallback to browser SpeechSynthesis.");
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.lang = locale;
+      utterance.onstart = () => setSpeaking(true);
+      utterance.onend = () => setSpeaking(false);
+      utterance.onerror = () => setSpeaking(false);
+      window.speechSynthesis.speak(utterance);
+    };
+
+    fetchTtsAndPlay();
   };
 
   const handleStopSpeaking = () => {
     window.speechSynthesis.cancel();
+    if (activeAudioRef.current) {
+      activeAudioRef.current.pause();
+      activeAudioRef.current = null;
+    }
     setSpeaking(false);
   };
 

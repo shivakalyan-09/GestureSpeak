@@ -522,6 +522,16 @@ function generateHtmlReport(results, browser, duration) {
   console.log(`HTML report generated: ${path.resolve('report.html')}`);
 }
 
+function generateCsvReport(results) {
+  let csvContent = '"Test Case ID","Test Case Name","Status"\n';
+  results.forEach(test => {
+    const escapedName = test.name.replace(/"/g, '""');
+    csvContent += `"${test.id}","${escapedName}","${test.status}"\n`;
+  });
+  fs.writeFileSync('report.csv', csvContent);
+  console.log(`CSV report generated: ${path.resolve('report.csv')}`);
+}
+
 async function start() {
   console.log(`Initializing Selenium WebDriver for browser: ${browserName}...`);
   let driver;
@@ -537,6 +547,9 @@ async function start() {
     
     // Generate HTML report
     generateHtmlReport(results, browserName, duration);
+    
+    // Generate CSV report (Excel compatible)
+    generateCsvReport(results);
     
     // Save results to report.json as well
     fs.writeFileSync('report.json', JSON.stringify({

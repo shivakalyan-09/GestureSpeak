@@ -211,7 +211,16 @@ public class EmergencyController {
         // Dispatch messages
         int successCount = 0;
         for (EmergencyContact contact : contactsList) {
-            boolean success = twilioService.sendSms(contact.getPhoneNumber(), emergencyMessage);
+            String phone = contact.getPhoneNumber().trim();
+            // Twilio requires E.164 format (starting with '+'). If missing, normalize it.
+            if (!phone.startsWith("+")) {
+                if (phone.length() == 10) {
+                    phone = "+91" + phone; // Default to India (+91) for 10-digit numbers
+                } else {
+                    phone = "+" + phone;
+                }
+            }
+            boolean success = twilioService.sendSms(phone, emergencyMessage);
             if (success) {
                 successCount++;
             }

@@ -88,6 +88,7 @@ export default function Login() {
             id="email"
             label="Email Address"
             name="email"
+            type="email"
             autoComplete="email"
             autoFocus
             value={email}

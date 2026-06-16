@@ -3,4 +3,6 @@ screenshots/
 mochawesome-report/
 report.html
 report.json
+report.csv
 .env
+
