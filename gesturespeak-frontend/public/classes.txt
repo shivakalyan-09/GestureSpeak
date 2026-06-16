@@ -1,0 +1,10 @@
+help
+no
+please
+school
+thank_you
+what
+who
+why
+yes
+you

@@ -1,0 +1,17 @@
+com\gesturespeak\backend\config\SecurityConfig.class
+com\gesturespeak\backend\BackendApplication.class
+com\gesturespeak\backend\model\EmergencyContact.class
+com\gesturespeak\backend\config\FirebaseTokenFilter.class
+com\gesturespeak\backend\controller\TranslationController.class
+com\gesturespeak\backend\service\FirebaseService.class
+com\gesturespeak\backend\controller\AdminController.class
+com\gesturespeak\backend\service\TwilioService.class
+com\gesturespeak\backend\model\LearningItem.class
+com\gesturespeak\backend\controller\AuthController.class
+com\gesturespeak\backend\controller\LearningController.class
+com\gesturespeak\backend\service\TranslationService.class
+com\gesturespeak\backend\controller\EmergencyController.class
+com\gesturespeak\backend\model\HistoryEntry.class
+com\gesturespeak\backend\model\EmergencyLog.class
+com\gesturespeak\backend\controller\HistoryController.class
+com\gesturespeak\backend\config\FirebaseConfig.class
