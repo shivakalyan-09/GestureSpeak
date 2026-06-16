@@ -1,0 +1,6 @@
+node_modules/
+screenshots/
+mochawesome-report/
+report.html
+report.json
+.env

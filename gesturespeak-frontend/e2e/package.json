@@ -1,0 +1,16 @@
+{
+  "name": "gesturespeak-e2e",
+  "version": "1.0.0",
+  "description": "Selenium E2E automation test suite for GestureSpeak React frontend",
+  "main": "runner.js",
+  "type": "module",
+  "scripts": {
+    "test": "node runner.js",
+    "test:chrome": "node runner.js --browser=chrome",
+    "test:firefox": "node runner.js --browser=firefox",
+    "test:edge": "node runner.js --browser=edge"
+  },
+  "dependencies": {
+    "selenium-webdriver": "^4.18.2"
+  }
+}

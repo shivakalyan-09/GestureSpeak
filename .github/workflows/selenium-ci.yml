@@ -1,0 +1,125 @@
+name: E2E Selenium Test Pipeline
+
+on:
+  push:
+    branches: [ main, master, dev ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  e2e-tests:
+    name: Selenium Tests - ${{ matrix.browser }}
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [ chrome, firefox, edge ]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: './gesturespeak-frontend/package-lock.json'
+
+      - name: Install Frontend Dependencies
+        working-directory: ./gesturespeak-frontend
+        run: npm ci
+
+      - name: Install E2E Test Dependencies
+        working-directory: ./gesturespeak-frontend/e2e
+        run: npm install
+
+      - name: Start React Frontend Application
+        working-directory: ./gesturespeak-frontend
+        run: |
+          npm run dev &
+          npx wait-on http://localhost:5173 --timeout 60000
+        env:
+          CI: true
+
+      - name: Execute Selenium E2E Suite
+        working-directory: ./gesturespeak-frontend/e2e
+        run: npm run test -- --browser=${{ matrix.browser }}
+        env:
+          CI: true
+
+      - name: Archive Test Failure Screenshots
+        if: failure() || success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-screenshots-${{ matrix.browser }}
+          path: ./gesturespeak-frontend/e2e/screenshots/
+          if-no-files-found: ignore
+
+      - name: Upload HTML Test Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-test-report-${{ matrix.browser }}
+          path: ./gesturespeak-frontend/e2e/report.html
+          retention-days: 14
+
+  deploy-report:
+    name: Deploy Test Report to GitHub Pages
+    needs: e2e-tests
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download Test Reports
+        uses: actions/download-artifact@v4
+        with:
+          path: temp-reports
+
+      - name: Consolidate Reports & Deploy
+        run: |
+          mkdir -p public-pages
+          # Copy reports and organize them by browser
+          cp -r temp-reports/selenium-test-report-chrome/report.html public-pages/chrome.html || true
+          cp -r temp-reports/selenium-test-report-firefox/report.html public-pages/firefox.html || true
+          cp -r temp-reports/selenium-test-report-edge/report.html public-pages/edge.html || true
+          
+          # Create a simple landing page index.html
+          cat << 'EOF' > public-pages/index.html
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>GestureSpeak QA Test Runs</title>
+            <style>
+              body { font-family: sans-serif; background: #030712; color: #f8fafc; text-align: center; padding: 50px; }
+              a { color: #4facfe; text-decoration: none; font-size: 1.25rem; display: block; margin: 15px 0; }
+              a:hover { text-decoration: underline; }
+              .card { background: #0f172a; border: 1px solid rgba(255,255,255,0.08); padding: 30px; border-radius: 12px; display: inline-block; }
+            </style>
+          </head>
+          <body>
+            <div class="card">
+              <h1>GestureSpeak Automation E2E Reports</h1>
+              <p>Select a browser execution report to review:</p>
+              <a href="chrome.html">Google Chrome E2E Suite</a>
+              <a href="firefox.html">Mozilla Firefox E2E Suite</a>
+              <a href="edge.html">Microsoft Edge E2E Suite</a>
+            </div>
+          </body>
+          </html>
+          EOF
+
+      # Optional: Deploy to GitHub Pages (gh-pages branch)
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: public-pages
+          branch: gh-pages
+          clean: true
+        continue-on-error: true

@@ -364,10 +364,14 @@ export default function Emergency() {
       return;
     }
 
-    // Phone validations (regex for international format digits or standard format)
+    // Phone validations (must start with '+' and include country code)
+    if (!formPhone.trim().startsWith('+')) {
+      setFormError("Phone number must start with '+' followed by your country code (e.g., +91 for India).");
+      return;
+    }
     const phoneDigits = formPhone.replace(/[^\d+]/g, '');
-    if (phoneDigits.length < 8) {
-      setFormError("Please enter a valid phone number containing at least 8 digits.");
+    if (phoneDigits.length < 10) {
+      setFormError("Please enter a valid phone number including country code (at least 10 digits).");
       return;
     }
 
@@ -1021,7 +1025,7 @@ export default function Emergency() {
           }
         }}
       >
-        <form onSubmit={handleSaveContact} style={{ width: '100%' }}>
+        <form noValidate onSubmit={handleSaveContact} style={{ width: '100%' }}>
           <DialogTitle sx={{ fontWeight: 900, color: 'var(--text-main)' }}>
             {editingContact ? "EDIT EMERGENCY CONTACT" : "ADD NEW CONTACT"}
           </DialogTitle>
