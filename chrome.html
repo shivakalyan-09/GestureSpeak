@@ -318,19 +318,19 @@
       </div>
       <div class="card">
         <div class="card-title">Pass Rate</div>
-        <div class="card-value color-success">89.5%</div>
+        <div class="card-value color-success">100.0%</div>
       </div>
       <div class="card">
         <div class="card-title">Passed / Total</div>
-        <div class="card-value color-success">17 / 19</div>
+        <div class="card-value color-success">19 / 19</div>
       </div>
       <div class="card">
         <div class="card-title">Failed</div>
-        <div class="card-value color-error">2</div>
+        <div class="card-value color-error">0</div>
       </div>
       <div class="card">
         <div class="card-title">Duration</div>
-        <div class="card-value color-warning">58.6s</div>
+        <div class="card-value color-warning">59.0s</div>
       </div>
     </div>
     
@@ -457,24 +457,19 @@
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-06</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Invalid Email Format Validation</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on the login page.</p>
             <p><strong>Expected:</strong> Email input uses HTML5 type="email" which restricts non-compliant format submissions.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Email field does not use input type="email" for format validations.</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol><li>Navigating to login URL</li><li>Clearing session for isolation</li><li>Entering email with invalid format</li><li>Verifying email field input type is set to email</li></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-06-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-06-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -672,24 +667,19 @@
         <td>
           <div class="test-meta">
             <span class="test-id">UI-02</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">History Log - Search & Filter Verification</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on the History Log archive page.</p>
             <p><strong>Expected:</strong> Search input triggers matching keyword filter logs and trims down non-matching items.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Filtered logs count cannot be larger than starting list count.</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Navigating to History log page</li><li>Checking total logs count</li><li>Initial logs count: 0</li><li>Entering search term "thank_you"</li><li>Checking filtered logs count matches expectation</li><li>Filtered logs count: 1</li></ol>
+              <ol><li>Navigating to History log page</li><li>Checking total logs count</li><li>Initial logs count: 3</li><li>Entering search term "thank_you"</li><li>Checking filtered logs count matches expectation</li><li>Filtered logs count: 1</li><li>Clearing search filter</li></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/UI-02-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/UI-02-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -750,7 +740,7 @@
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Fetching browser log buffers</li><li>Analyzing 59 browser console lines...</li><li>Console logs review completed. No credentials leaks identified.</li></ol>
+              <ol><li>Fetching browser log buffers</li><li>Analyzing 55 browser console lines...</li><li>Console logs review completed. No credentials leaks identified.</li></ol>
             </div>
             
           </div>
