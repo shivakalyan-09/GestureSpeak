@@ -7,7 +7,7 @@ import {
 import CameraSignDetection from '../components/CameraSignDetection';
 import { predictSign } from '../services/prediction';
 import { translateText, LANGUAGES } from '../services/translation';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, BACKEND_URL } from '../context/AuthContext';
 import {
   ContentCopy as CopyIcon,
   VolumeUp as SpeakIcon,
@@ -160,7 +160,7 @@ export default function SignDetection() {
 
     const fetchTtsAndPlay = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/tts', {
+        const response = await fetch(`${BACKEND_URL}/api/tts`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -227,7 +227,7 @@ export default function SignDetection() {
   const savePrediction = async (word: string, translatedWord: string, conf: number) => {
     if (!token) return;
     try {
-      await fetch(`http://localhost:8080/api/history`, {
+      await fetch(`${BACKEND_URL}/api/history`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

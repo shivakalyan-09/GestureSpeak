@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Box, IconButton, Toolbar, AppBar, Typography, Button } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, IconButton, Toolbar, AppBar, Typography, Button, Tooltip, Chip } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Sidebar from './Sidebar';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SmsFailedIcon from '@mui/icons-material/SmsFailed';
+import { getBackendUrl } from '../context/AuthContext';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -21,12 +22,34 @@ export default function Layout({
   onLogout,
 }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [backendOnline, setBackendOnline] = useState<boolean | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
   const handleToggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
+
+  // Backend health check — runs every 15 seconds.
+  // /api/health is in SecurityConfig permitAll — no auth, no actuator dependency needed.
+  // Any HTTP response = server running. Only a network-level throw = offline.
+  const checkBackendHealth = async () => {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`${getBackendUrl()}/api/health`, { signal: controller.signal });
+      clearTimeout(timeoutId);
+      setBackendOnline(res.ok);
+    } catch {
+      setBackendOnline(false);
+    }
+  };
+
+  useEffect(() => {
+    checkBackendHealth();
+    const interval = setInterval(checkBackendHealth, 15000);
+    return () => clearInterval(interval);
+  }, []);
 
   const getPageTitle = () => {
     switch (location.pathname) {
@@ -95,13 +118,13 @@ export default function Layout({
           }}
         >
           <Toolbar sx={{ justifyContent: 'space-between', px: 3 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
                 edge="start"
                 onClick={handleToggleSidebar}
-                sx={{ mr: 2, color: 'var(--text-main)' }}
+                sx={{ mr: 0, color: 'var(--text-main)' }}
               >
                 <MenuIcon />
               </IconButton>
@@ -120,24 +143,80 @@ export default function Layout({
               </Typography>
             </Box>
 
-            {/* Quick SOS Trigger button on AppBar */}
-            <Button
-              variant="contained"
-              color="error"
-              startIcon={<SmsFailedIcon />}
-              onClick={() => navigate('/emergency')}
-              sx={{
-                fontWeight: 700,
-                borderRadius: '12px',
-                px: 2,
-                boxShadow: '0 4px 12px 0 rgba(239, 68, 68, 0.25)',
-                '&:hover': {
-                  backgroundColor: 'error.dark',
-                },
-              }}
-            >
-              SOS TRIGGER
-            </Button>
+            {/* Right side — Backend status + SOS button */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              {/* Backend Online/Offline Chip */}
+              <Tooltip
+                title={
+                  backendOnline === null
+                    ? 'Checking backend connection...'
+                    : backendOnline
+                    ? `Backend connected at ${getBackendUrl()}`
+                    : `Backend OFFLINE — Start Spring Boot server at ${getBackendUrl()}. Running in offline mode.`
+                }
+                arrow
+              >
+                <Chip
+                  size="small"
+                  label={
+                    backendOnline === null
+                      ? '● Checking...'
+                      : backendOnline
+                      ? '● Backend Online'
+                      : '● Backend Offline'
+                  }
+                  onClick={checkBackendHealth}
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: '0.72rem',
+                    letterSpacing: 0.4,
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    color:
+                      backendOnline === null
+                        ? '#94a3b8'
+                        : backendOnline
+                        ? '#22c55e'
+                        : '#ef4444',
+                    backgroundColor:
+                      backendOnline === null
+                        ? 'rgba(148, 163, 184, 0.10)'
+                        : backendOnline
+                        ? 'rgba(34, 197, 94, 0.10)'
+                        : 'rgba(239, 68, 68, 0.10)',
+                    border: `1px solid ${
+                      backendOnline === null
+                        ? 'rgba(148, 163, 184, 0.2)'
+                        : backendOnline
+                        ? 'rgba(34, 197, 94, 0.25)'
+                        : 'rgba(239, 68, 68, 0.25)'
+                    }`,
+                    '&:hover': {
+                      opacity: 0.85,
+                    },
+                  }}
+                />
+              </Tooltip>
+
+              {/* Quick SOS Trigger button on AppBar */}
+              <Button
+                variant="contained"
+                color="error"
+                startIcon={<SmsFailedIcon />}
+                onClick={() => navigate('/emergency')}
+                sx={{
+                  fontWeight: 700,
+                  borderRadius: '12px',
+                  px: 2,
+                  boxShadow: '0 4px 12px 0 rgba(239, 68, 68, 0.25)',
+                  '&:hover': {
+                    backgroundColor: 'error.dark',
+                  },
+                }}
+              >
+                SOS TRIGGER
+              </Button>
+            </Box>
           </Toolbar>
         </AppBar>
 

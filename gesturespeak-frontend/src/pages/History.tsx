@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
 import { 
-  Box, Card, CardContent, Typography, TextField, Button, Table, 
-  TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, 
-  IconButton, Stack, Alert, Snackbar 
+  Box, Card, CardContent, Typography, TextField, Button,
+  IconButton, Stack, Alert, Snackbar, Tooltip
 } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
-import { BACKEND_URL } from '../context/AuthContext';
+import { getBackendUrl } from '../context/AuthContext';
 import {
   Search as SearchIcon,
   Delete as DeleteIcon,
   FileDownload as ExportIcon,
-  ClearAll as ClearIcon
+  ClearAll as ClearIcon,
+  CameraAlt as CameraIcon,
+  Translate as TranslateIcon,
+  ContentCopy as CopyIcon
 } from '@mui/icons-material';
 
 interface HistoryItem {
@@ -33,7 +35,7 @@ export default function History() {
   const fetchHistory = async () => {
     if (!token) return;
     try {
-      const res = await fetch(`${BACKEND_URL}/api/history`, {
+      const res = await fetch(`${getBackendUrl()}/api/history`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -56,7 +58,7 @@ export default function History() {
 
   const handleDeleteItem = async (id: string) => {
     try {
-      const res = await fetch(`${BACKEND_URL}/api/history/${id}`, {
+      const res = await fetch(`${getBackendUrl()}/api/history/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -72,7 +74,7 @@ export default function History() {
 
   const handleClearAll = async () => {
     try {
-      const res = await fetch(`${BACKEND_URL}/api/history`, {
+      const res = await fetch(`${getBackendUrl()}/api/history`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -89,7 +91,7 @@ export default function History() {
   const handleExportCsv = () => {
     if (!token) return;
     // Redirect or trigger backend download with authentication token in request parameters or download via fetch
-    fetch(`${BACKEND_URL}/api/history/export`, {
+    fetch(`${getBackendUrl()}/api/history/export`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(response => response.blob())
@@ -176,46 +178,135 @@ export default function History() {
             </Stack>
           </Box>
 
-          {/* History Data Table */}
+          {/* History Data Cards List */}
           {filteredHistory.length > 0 ? (
-            <TableContainer component={Paper} elevation={0} sx={{ background: 'transparent' }}>
-              <Table>
-                <TableHead>
-                  <TableRow sx={{ '& th': { borderBottom: '1px solid var(--border-glass)', color: 'var(--text-sub)', fontWeight: 800 } }}>
-                    <TableCell>Date/Time</TableCell>
-                    <TableCell>Module Type</TableCell>
-                    <TableCell>Source Input</TableCell>
-                    <TableCell>Prediction Translation</TableCell>
-                    <TableCell>Confidence</TableCell>
-                    <TableCell align="right">Actions</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {filteredHistory.map((item) => (
-                    <TableRow key={item.id} sx={{ '& td': { borderBottom: '1px solid var(--border-glass)', color: 'var(--text-main)' } }}>
-                      <TableCell sx={{ fontWeight: 600 }}>{item.timeFormatted}</TableCell>
-                      <TableCell>{item.type}</TableCell>
-                      <TableCell sx={{ fontStyle: 'italic', color: 'var(--text-sub)' }}>
-                        {item.original.length > 30 ? item.original.substring(0, 30) + '...' : item.original}
-                      </TableCell>
-                      <TableCell sx={{ fontWeight: 800, textTransform: 'capitalize' }}>
-                        {item.translated.replace("_", " ")}
-                      </TableCell>
-                      <TableCell>
-                        <Typography variant="body2" sx={{ fontWeight: 700, color: item.confidence > 0.8 ? 'success.main' : 'warning.main' }}>
-                          {Math.round(item.confidence * 100)}%
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="right">
-                        <IconButton color="error" onClick={() => handleDeleteItem(item.id)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+            <Stack spacing={2.5}>
+              {filteredHistory.map((item) => {
+                const isSignType = item.type.toLowerCase().includes('sign');
+                const confidencePct = Math.round(item.confidence * 100);
+                
+                return (
+                  <Card 
+                    key={item.id} 
+                    className="glass-card" 
+                    sx={{ 
+                      borderRadius: '20px',
+                      border: '1.5px solid var(--border-glass)',
+                      transition: 'all 0.2s ease',
+                      backgroundImage: 'none',
+                      backgroundColor: 'var(--bg-card)',
+                      '&:hover': {
+                        transform: 'translateY(-3px)',
+                        boxShadow: 'var(--shadow-glass)',
+                      }
+                    }}
+                  >
+                    <CardContent sx={{ p: 2.5, '&:last-child': { pb: 2.5 } }}>
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 2.5 }}>
+                        {/* Left Side: Type Icon, Source and Translation */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2.5, flexGrow: 1, minWidth: 0 }}>
+                          {/* Module Icon Badge */}
+                          <Box 
+                            sx={{ 
+                              display: 'flex', 
+                              alignItems: 'center', 
+                              justifyContent: 'center',
+                              width: 48, 
+                              height: 48, 
+                              borderRadius: '14px', 
+                              background: isSignType 
+                                ? 'rgba(79, 172, 254, 0.1)' 
+                                : 'rgba(236, 56, 188, 0.1)',
+                              color: isSignType ? 'primary.main' : 'secondary.main',
+                              flexShrink: 0
+                            }}
+                          >
+                            {isSignType ? <CameraIcon sx={{ fontSize: '1.3rem' }} /> : <TranslateIcon sx={{ fontSize: '1.3rem' }} />}
+                          </Box>
+
+                          {/* Translation Details */}
+                          <Box sx={{ minWidth: 0, flexGrow: 1 }}>
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1.5, mb: 0.8 }}>
+                              <Typography variant="caption" sx={{ fontWeight: 800, color: 'var(--text-sub)', textTransform: 'uppercase', letterSpacing: 0.8, fontSize: '0.72rem' }}>
+                                {item.type}
+                              </Typography>
+                              <Box 
+                                sx={{ 
+                                  px: 1.2, 
+                                  py: 0.2, 
+                                  borderRadius: '20px', 
+                                  background: confidencePct > 80 ? 'rgba(16, 185, 129, 0.1)' : 'rgba(245, 158, 11, 0.1)',
+                                  color: confidencePct > 80 ? 'success.main' : 'warning.main',
+                                  border: confidencePct > 80 ? '1px solid rgba(16, 185, 129, 0.2)' : '1px solid rgba(245, 158, 11, 0.2)',
+                                  fontSize: '0.7rem', 
+                                  fontWeight: 800 
+                                }}
+                              >
+                                {confidencePct}% Confidence
+                              </Box>
+                            </Box>
+
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1 }}>
+                              <Typography variant="body2" sx={{ fontStyle: 'italic', color: 'var(--text-sub)', fontSize: '0.92rem' }}>
+                                "{item.original}"
+                              </Typography>
+                              <Typography variant="body1" sx={{ color: 'var(--text-main)', fontWeight: 800 }}>
+                                ➔ {item.translated.replace("_", " ")}
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Box>
+
+                        {/* Right Side: Timestamp and Actions */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, flexShrink: 0, ml: 'auto' }}>
+                          <Typography variant="body2" sx={{ color: 'var(--text-sub)', fontWeight: 700, fontSize: '0.85rem' }}>
+                            {item.timeFormatted}
+                          </Typography>
+                          
+                          <Stack direction="row" spacing={1.2}>
+                            <Tooltip title="Copy Translation" arrow>
+                              <IconButton 
+                                size="small" 
+                                onClick={() => {
+                                  navigator.clipboard.writeText(item.translated);
+                                  setToastMessage("Translation copied to clipboard!");
+                                }}
+                                sx={{ 
+                                  border: '1px solid var(--border-glass)',
+                                  color: 'var(--text-sub)',
+                                  '&:hover': {
+                                    color: 'primary.main',
+                                    backgroundColor: 'action.hover'
+                                  }
+                                }}
+                              >
+                                <CopyIcon sx={{ fontSize: '1.05rem' }} />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Delete Record" arrow>
+                              <IconButton 
+                                size="small" 
+                                color="error" 
+                                onClick={() => handleDeleteItem(item.id)}
+                                sx={{ 
+                                  border: '1px solid var(--border-glass)',
+                                  '&:hover': {
+                                    backgroundColor: 'error.light',
+                                    color: '#ffffff'
+                                  }
+                                }}
+                              >
+                                <DeleteIcon sx={{ fontSize: '1.05rem' }} />
+                              </IconButton>
+                            </Tooltip>
+                          </Stack>
+                        </Box>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </Stack>
           ) : (
             <Box sx={{ py: 6, textAlign: 'center' }}>
               <Typography variant="body2" sx={{ color: 'var(--text-sub)' }}>

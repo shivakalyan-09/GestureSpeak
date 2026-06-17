@@ -160,6 +160,7 @@ export default function ForgotPassword() {
               id="email"
               label="Email Address"
               name="email"
+              type="email"
               autoFocus
               value={email}
               onChange={(e) => setEmail(e.target.value)}

@@ -1,0 +1,31 @@
+# Maven
+gesturespeak-backend/target/
+gesturespeak-backend/.flattened-pom.xml
+gesturespeak-backend/dependency-reduced-pom.xml
+
+# Node
+node_modules/
+gesturespeak-frontend/node_modules/
+gesturespeak-frontend/e2e/node_modules/
+dist/
+gesturespeak-frontend/dist/
+
+# IDEs
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

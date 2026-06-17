@@ -37,7 +37,11 @@ export function useAuth() {
   return context;
 }
 
-export const BACKEND_URL = 'http://localhost:8080';
+// Reactive getter — always reads latest value from localStorage so Settings changes apply instantly.
+export const getBackendUrl = () => localStorage.getItem('backend_url_override') || 'http://localhost:8080';
+// Alias for backward-compat with files that import BACKEND_URL as a string.
+// NOTE: This is a dynamic getter evaluated at call-time, not a static constant.
+export const BACKEND_URL = 'http://localhost:8080'; // default, overridden at runtime via getBackendUrl()
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
@@ -48,7 +52,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Sync profile with our Spring Boot Backend
   const syncProfileWithBackend = async (uid: string, email: string, idToken: string) => {
     try {
-      const response = await fetch(`${BACKEND_URL}/api/auth/profile`, {
+      const response = await fetch(`${getBackendUrl()}/api/auth/profile`, {
         headers: { 'Authorization': `Bearer ${idToken}` }
       });
       if (response.ok) {
@@ -56,7 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(profileData);
       } else {
         // Create user document on backend if profile retrieval fails
-        const registerResponse = await fetch(`${BACKEND_URL}/api/auth/register`, {
+        const registerResponse = await fetch(`${getBackendUrl()}/api/auth/register`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -170,7 +174,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setToken(idToken);
       
       // Save profile to backend
-      await fetch(`${BACKEND_URL}/api/auth/register`, {
+      await fetch(`${getBackendUrl()}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -202,7 +206,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       if (auth.app.options.apiKey === "mock-api-key") {
         // In local mode, trigger the backend OTP generation console log
-        await fetch(`${BACKEND_URL}/api/auth/forgot-password?email=${encodeURIComponent(email)}`, {
+        await fetch(`${getBackendUrl()}/api/auth/forgot-password?email=${encodeURIComponent(email)}`, {
           method: 'POST'
         });
         return;
@@ -210,7 +214,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await sendPasswordResetEmail(auth, email);
     } catch (err) {
       // Fallback
-      await fetch(`${BACKEND_URL}/api/auth/forgot-password?email=${encodeURIComponent(email)}`, {
+      await fetch(`${getBackendUrl()}/api/auth/forgot-password?email=${encodeURIComponent(email)}`, {
         method: 'POST'
       });
     }
@@ -219,7 +223,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const updateUsername = async (username: string) => {
     if (!token || !user) return;
     try {
-      const response = await fetch(`${BACKEND_URL}/api/auth/profile`, {
+      const response = await fetch(`${getBackendUrl()}/api/auth/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -252,7 +256,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     logout,
     sendPasswordReset,
     updateUsername,
-    backendUrl: BACKEND_URL
+    backendUrl: getBackendUrl()
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

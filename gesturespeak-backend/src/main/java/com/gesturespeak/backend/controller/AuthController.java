@@ -1,5 +1,6 @@
 package com.gesturespeak.backend.controller;
 
+import com.gesturespeak.backend.model.Activity;
 import com.gesturespeak.backend.service.FirebaseService;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -44,6 +46,26 @@ public class AuthController {
         userProfile.put("username", "Gesture User");
         userProfile.put("role", "USER");
         mockUsers.put("mock-user-uid", userProfile);
+    }
+
+    private void logActivity(String uid, String details) {
+        Activity activity = new Activity(
+            java.util.UUID.randomUUID().toString(),
+            uid,
+            "profile_update",
+            System.currentTimeMillis(),
+            details
+        );
+        if (firebaseService.isFirebaseInitialized()) {
+            try {
+                Firestore db = firebaseService.getDb();
+                db.collection("activities").document(activity.getId()).set(activity);
+            } catch (Exception e) {
+                System.err.println("Firestore profile activity save failed: " + e.getMessage());
+            }
+        } else {
+            AnalyticsController.mockActivities.computeIfAbsent(uid, k -> new CopyOnWriteArrayList<>()).add(activity);
+        }
     }
 
     @PostMapping("/register")
@@ -116,6 +138,7 @@ public class AuthController {
     public ResponseEntity<?> updateProfile(@RequestBody Map<String, String> request) {
         String uid = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = request.get("username");
+        logActivity(uid, "Updated username to: " + username);
 
         if (firebaseService.isFirebaseInitialized()) {
             try {

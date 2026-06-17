@@ -31,9 +31,13 @@ export default function Learning() {
 
   const fetchItems = async () => {
     try {
-      const url = `${BACKEND_URL}/api/learning/public/list` + 
-        (category !== 'all' ? `?category=${category}` : '');
-      const res = await fetch(url);
+      const baseUrl = token ? `${BACKEND_URL}/api/learning` : `${BACKEND_URL}/api/learning/public/list`;
+      const url = baseUrl + (category !== 'all' ? `?category=${category}` : '');
+      const headers: any = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      const res = await fetch(url, { headers });
       if (res.ok) {
         const list = await res.json();
         setItems(list);

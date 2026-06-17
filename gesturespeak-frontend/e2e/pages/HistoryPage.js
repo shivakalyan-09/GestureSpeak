@@ -7,7 +7,7 @@ export default class HistoryPage extends BasePage {
     this.searchInput = By.xpath("//input[@placeholder='Search history log...']");
     this.exportCsvButton = By.xpath("//button[contains(., 'Export CSV')]");
     this.clearAllButton = By.xpath("//button[contains(., 'Clear All')]");
-    this.tableRow = By.xpath("//table/tbody/tr");
+    this.tableRow = By.xpath("//div[contains(@class, 'glass-card') and .//button[contains(@class, 'MuiIconButton-colorError')]]");
     this.emptyStateMessage = By.xpath("//div[contains(text(), 'No records found')]");
   }
 
@@ -41,10 +41,8 @@ export default class HistoryPage extends BasePage {
   async getFirstRowTranslation() {
     const rows = await this.driver.findElements(this.tableRow);
     if (rows.length > 0) {
-      const cells = await rows[0].findElements(By.xpath("./td"));
-      if (cells.length > 3) {
-        return await cells[3].getText(); // Index 3 is Translation
-      }
+      const transEl = await rows[0].findElement(By.xpath(".//*[contains(text(), '➔')]"));
+      return await transEl.getText();
     }
     return "";
   }
@@ -52,7 +50,7 @@ export default class HistoryPage extends BasePage {
   async deleteFirstRow() {
     const rows = await this.driver.findElements(this.tableRow);
     if (rows.length > 0) {
-      const deleteBtn = await rows[0].findElement(By.xpath(".//button[contains(@class, 'MuiIconButton-colorError')]"));
+      const deleteBtn = await rows[0].findElement(By.xpath(".//button[contains(@class, 'MuiIconButton-colorError') or .//*[local-name()='svg' and @data-testid='DeleteIcon']]"));
       await deleteBtn.click();
     }
   }

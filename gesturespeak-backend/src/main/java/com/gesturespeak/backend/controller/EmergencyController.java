@@ -2,6 +2,7 @@ package com.gesturespeak.backend.controller;
 
 import com.gesturespeak.backend.model.EmergencyContact;
 import com.gesturespeak.backend.model.EmergencyLog;
+import com.gesturespeak.backend.model.Activity;
 import com.gesturespeak.backend.service.FirebaseService;
 import com.gesturespeak.backend.service.TwilioService;
 import com.google.cloud.firestore.Firestore;
@@ -30,6 +31,26 @@ public class EmergencyController {
     public EmergencyController(FirebaseService firebaseService, TwilioService twilioService) {
         this.firebaseService = firebaseService;
         this.twilioService = twilioService;
+    }
+
+    private void logActivity(String uid, String details) {
+        Activity activity = new Activity(
+            UUID.randomUUID().toString(),
+            uid,
+            "emergency_contact_update",
+            System.currentTimeMillis(),
+            details
+        );
+        if (firebaseService.isFirebaseInitialized()) {
+            try {
+                Firestore db = firebaseService.getDb();
+                db.collection("activities").document(activity.getId()).set(activity);
+            } catch (Exception e) {
+                System.err.println("Firestore emergency activity save failed: " + e.getMessage());
+            }
+        } else {
+            AnalyticsController.mockActivities.computeIfAbsent(uid, k -> new CopyOnWriteArrayList<>()).add(activity);
+        }
     }
 
     private String getAuthUserId() {
@@ -111,6 +132,7 @@ public class EmergencyController {
         }
 
         // Save Contact
+        logActivity(uid, (isEdit ? "Updated" : "Added") + " emergency contact: " + contact.getName());
         if (firebaseService.isFirebaseInitialized()) {
             try {
                 Firestore db = firebaseService.getDb();
@@ -138,6 +160,7 @@ public class EmergencyController {
     @DeleteMapping("/contacts/{id}")
     public ResponseEntity<?> deleteContact(@PathVariable String id) {
         String uid = getAuthUserId();
+        logActivity(uid, "Deleted emergency contact");
         if (firebaseService.isFirebaseInitialized()) {
             try {
                 Firestore db = firebaseService.getDb();
@@ -158,6 +181,7 @@ public class EmergencyController {
     @PutMapping("/contacts/primary/{id}")
     public ResponseEntity<?> setPrimaryContact(@PathVariable String id) {
         String uid = getAuthUserId();
+        logActivity(uid, "Updated primary emergency contact");
         if (firebaseService.isFirebaseInitialized()) {
             try {
                 Firestore db = firebaseService.getDb();
@@ -242,6 +266,7 @@ public class EmergencyController {
         log.setMapsUrl(mapsUrl);
         log.setContactsNotified(successCount);
         log.setStatus(status);
+        logActivity(uid, "Triggered SOS Emergency Alert");
 
         // Save Log to Firestore (Root collection emergencyLogs)
         if (firebaseService.isFirebaseInitialized()) {

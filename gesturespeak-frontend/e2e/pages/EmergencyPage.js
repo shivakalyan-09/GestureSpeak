@@ -24,7 +24,7 @@ export default class EmergencyPage extends BasePage {
     
     // TAB 1: Contacts elements
     this.addContactButton = By.xpath("//button[contains(., 'Add Contact')]");
-    this.contactsTableRow = By.xpath("//table/tbody/tr");
+    this.contactsTableRow = By.xpath("//div[contains(@class, 'glass-card') and .//button[contains(., 'Delete')]]");
     this.primaryStarButton = By.xpath(".//button[contains(@class, 'IconButton-root')]"); // relative to row
     
     // Contact Dialog Form Elements (using partial text contains matches for Mui labels with required asterisks)
@@ -150,10 +150,8 @@ export default class EmergencyPage extends BasePage {
   async getFirstContactName() {
     const rows = await this.driver.findElements(this.contactsTableRow);
     if (rows.length > 0) {
-      const cells = await rows[0].findElements(By.xpath("./td"));
-      if (cells.length > 1) {
-        return await cells[1].getText();
-      }
+      const nameEl = await rows[0].findElement(By.css(".MuiTypography-subtitle1"));
+      return await nameEl.getText();
     }
     return "";
   }
@@ -161,7 +159,7 @@ export default class EmergencyPage extends BasePage {
   async clickDeleteFirstContact() {
     const rows = await this.driver.findElements(this.contactsTableRow);
     if (rows.length > 0) {
-      const deleteButton = await rows[0].findElement(By.xpath(".//button[contains(@class, 'MuiIconButton-colorError')]"));
+      const deleteButton = await rows[0].findElement(By.xpath(".//button[contains(., 'Delete')]"));
       await deleteButton.click();
     }
   }
@@ -169,7 +167,7 @@ export default class EmergencyPage extends BasePage {
   async clickEditFirstContact() {
     const rows = await this.driver.findElements(this.contactsTableRow);
     if (rows.length > 0) {
-      const editButton = await rows[0].findElement(By.xpath(".//button[contains(@class, 'MuiIconButton-colorPrimary')]"));
+      const editButton = await rows[0].findElement(By.xpath(".//button[contains(., 'Edit')]"));
       await editButton.click();
       await this.driver.wait(until.elementLocated(this.dialogTitle), 5000);
       await new Promise(r => setTimeout(r, 400)); // wait for transition

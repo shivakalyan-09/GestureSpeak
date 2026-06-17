@@ -1,6 +1,8 @@
 package com.gesturespeak.backend.controller;
 
 import com.gesturespeak.backend.model.HistoryEntry;
+import com.gesturespeak.backend.model.Translation;
+import com.gesturespeak.backend.model.Activity;
 import com.gesturespeak.backend.service.FirebaseService;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -85,6 +87,38 @@ public class HistoryController {
         String timeFormatted = new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(new Date(timestamp));
         entry.setTimeFormatted(timeFormatted);
 
+        // Map types to standardized analytics keys
+        String mappedType = "Live Translate";
+        String originalType = entry.getType() != null ? entry.getType() : "";
+        if (originalType.equalsIgnoreCase("Sign Language to Text") || originalType.equalsIgnoreCase("Sign to Text")) {
+            mappedType = "Sign to Text";
+        } else if (originalType.equalsIgnoreCase("Text to Speech") || originalType.equalsIgnoreCase("Text to Sign")) {
+            mappedType = "Text to Sign";
+        } else if (originalType.equalsIgnoreCase("Live Translation") || originalType.equalsIgnoreCase("Live Translate")) {
+            mappedType = "Live Translate";
+        } else if (originalType.equalsIgnoreCase("Voice Translation") || originalType.equalsIgnoreCase("Voice Translate")) {
+            mappedType = "Voice Translate";
+        }
+
+        Translation translation = new Translation(
+                entry.getId(),
+                uid,
+                entry.getOriginal(),
+                entry.getTranslated(),
+                mappedType,
+                entry.getTimestamp(),
+                entry.getConfidence(),
+                entry.getMode()
+        );
+
+        Activity activity = new Activity(
+                UUID.randomUUID().toString(),
+                uid,
+                mappedType,
+                entry.getTimestamp(),
+                entry.getOriginal() + " -> " + entry.getTranslated()
+        );
+
         // Audit Logging to Backend Logs
         System.out.println("================= BACKEND TRANSLATION HISTORY LOG ================= ");
         System.out.println("User ID: " + uid);
@@ -101,6 +135,11 @@ public class HistoryController {
                 Firestore db = firebaseService.getDb();
                 DocumentReference docRef = db.collection("users").document(uid).collection("history").document(entry.getId());
                 docRef.set(entry).get();
+
+                // Save to flat tables for analytics
+                db.collection("translations").document(translation.getId()).set(translation);
+                db.collection("activities").document(activity.getId()).set(activity);
+
                 return ResponseEntity.ok(entry);
             } catch (Exception e) {
                 System.err.println("Firestore history save failed, using mock: " + e.getMessage());
@@ -108,6 +147,9 @@ public class HistoryController {
         }
 
         mockHistory.computeIfAbsent(uid, k -> new CopyOnWriteArrayList<>()).add(entry);
+        AnalyticsController.mockTranslations.computeIfAbsent(uid, k -> new CopyOnWriteArrayList<>()).add(translation);
+        AnalyticsController.mockActivities.computeIfAbsent(uid, k -> new CopyOnWriteArrayList<>()).add(activity);
+
         return ResponseEntity.ok(entry);
     }
 
@@ -118,6 +160,7 @@ public class HistoryController {
             try {
                 Firestore db = firebaseService.getDb();
                 db.collection("users").document(uid).collection("history").document(id).delete().get();
+                db.collection("translations").document(id).delete();
                 return ResponseEntity.ok(Map.of("message", "History item deleted"));
             } catch (Exception e) {
                 System.err.println("Firestore history deletion failed, using mock: " + e.getMessage());
@@ -127,6 +170,10 @@ public class HistoryController {
         List<HistoryEntry> list = mockHistory.get(uid);
         if (list != null) {
             list.removeIf(item -> item.getId().equals(id));
+        }
+        List<Translation> tList = AnalyticsController.mockTranslations.get(uid);
+        if (tList != null) {
+            tList.removeIf(item -> item.getId().equals(id));
         }
         return ResponseEntity.ok(Map.of("message", "History item deleted (Mock)"));
     }
@@ -138,12 +185,12 @@ public class HistoryController {
             try {
                 Firestore db = firebaseService.getDb();
                 CollectionReference historyRef = db.collection("users").document(uid).collection("history");
-                // Firestore doesn't support deleting a whole collection in one API call on client/server without paging
                 ApiFuture<QuerySnapshot> future = historyRef.get();
                 List<QueryDocumentSnapshot> documents = future.get().getDocuments();
                 WriteBatch batch = db.batch();
                 for (DocumentSnapshot doc : documents) {
                     batch.delete(doc.getReference());
+                    batch.delete(db.collection("translations").document(doc.getId()));
                 }
                 batch.commit().get();
                 return ResponseEntity.ok(Map.of("message", "History cleared"));
@@ -153,8 +200,10 @@ public class HistoryController {
         }
 
         mockHistory.remove(uid);
+        AnalyticsController.mockTranslations.remove(uid);
         return ResponseEntity.ok(Map.of("message", "History cleared (Mock)"));
     }
+
 
     @GetMapping("/export")
     public ResponseEntity<byte[]> exportHistory() {

@@ -35,13 +35,18 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/api/auth/register", 
-                    "/api/auth/login", 
-                    "/api/auth/forgot-password", 
+                    "/api/auth/register",
+                    "/api/auth/login",
+                    "/api/auth/forgot-password",
                     "/api/auth/reset-password",
+                    "/api/auth/verify-otp",
                     "/api/learning/public/**",
                     "/api/translate",
-                    "/api/tts"
+                    "/api/tts",
+                    "/api/health",
+                    "/api/health/**",
+                    "/actuator/health",
+                    "/actuator/info"
                 ).permitAll()
                 .anyRequest().authenticated()
             )

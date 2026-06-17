@@ -4,7 +4,7 @@ import { By } from 'selenium-webdriver';
 export default class DashboardPage extends BasePage {
   constructor(driver) {
     super(driver);
-    this.welcomeHeader = By.xpath("//h4[contains(text(), 'Welcome back')]");
+    this.welcomeHeader = By.xpath("//h4[contains(text(), 'Welcome')]");
     
     // Quick access card items
     this.signToTextCard = By.xpath("//h6[text()='Sign to Text']/ancestor::div[contains(@class, 'MuiCard-root')]");

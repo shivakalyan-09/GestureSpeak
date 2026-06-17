@@ -4,14 +4,16 @@ import {
   FormControl, InputLabel, Select, MenuItem, Stack, IconButton, Snackbar, Alert, Chip
 } from '@mui/material';
 import { translateText, LANGUAGES } from '../services/translation';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, BACKEND_URL } from '../context/AuthContext';
 import {
   Translate as TranslateIcon,
   ContentCopy as CopyIcon,
   VolumeUp as SpeakIcon,
   Refresh as ClearIcon,
   CompareArrows as SwapIcon,
-  Stop as StopIcon
+  Stop as StopIcon,
+  Mic as MicIcon,
+  MicOff as MicOffIcon
 } from '@mui/icons-material';
 
 export default function LiveTranslate() {
@@ -28,6 +30,10 @@ export default function LiveTranslate() {
   const [speaking, setSpeaking] = useState(false);
 
   const activeAudioRef = useRef<HTMLAudioElement | null>(null);
+  const recognitionRef = useRef<any>(null);
+
+  const [listening, setListening] = useState(false);
+  const [isDictated, setIsDictated] = useState(false);
 
   // Monitor speaking status
   useEffect(() => {
@@ -43,8 +49,65 @@ export default function LiveTranslate() {
       };
     }
 
+    // Initialize Web Speech API
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      const rec = new SpeechRecognition();
+      rec.continuous = false;
+      rec.interimResults = false;
+      
+      rec.onstart = () => {
+        setListening(true);
+      };
+      
+      rec.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript;
+        setInputText(prev => (prev ? prev + ' ' : '') + transcript);
+        setIsDictated(true);
+        setStatus('Idle');
+      };
+      
+      rec.onerror = (event: any) => {
+        console.error("Speech recognition error:", event);
+        setListening(false);
+      };
+      
+      rec.onend = () => {
+        setListening(false);
+      };
+      
+      recognitionRef.current = rec;
+    }
+
     return () => clearInterval(interval);
   }, []);
+
+  const handleToggleListening = () => {
+    if (listening) {
+      recognitionRef.current?.stop();
+    } else {
+      if (!recognitionRef.current) {
+        // Fallback simulated dictation if browser doesn't support Web Speech API
+        const voicePrompts = [
+          "hello",
+          "how are you",
+          "thank you",
+          "please help me",
+          "where is the school"
+        ];
+        const randomPrompt = voicePrompts[Math.floor(Math.random() * voicePrompts.length)];
+        setInputText(prev => (prev ? prev + ' ' : '') + randomPrompt);
+        setIsDictated(true);
+        setStatus('Idle');
+        setToastMessage("Microphone API simulated: '" + randomPrompt + "'");
+        return;
+      }
+      
+      const langObj = LANGUAGES.find(l => l.code === sourceLang);
+      recognitionRef.current.lang = langObj ? langObj.locale : 'en-US';
+      recognitionRef.current.start();
+    }
+  };
 
   const handleTranslate = async () => {
     if (!inputText || inputText.trim() === '') return;
@@ -58,7 +121,7 @@ export default function LiveTranslate() {
 
       // Save translation to history database
       if (token) {
-        await fetch(`http://localhost:8080/api/history`, {
+        await fetch(`${BACKEND_URL}/api/history`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -67,7 +130,7 @@ export default function LiveTranslate() {
           body: JSON.stringify({
             original: inputText,
             translated: res,
-            type: "Live Translation",
+            type: isDictated ? "Voice Translate" : "Live Translate",
             mode: "translate",
             confidence: 1.0
           })
@@ -119,7 +182,7 @@ export default function LiveTranslate() {
     
     const fetchTtsAndPlay = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/tts', {
+        const response = await fetch(`${BACKEND_URL}/api/tts`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -208,6 +271,7 @@ export default function LiveTranslate() {
     setTranslatedText('');
     setErrorMsg(null);
     setStatus('Idle');
+    setIsDictated(false);
     window.speechSynthesis.cancel();
   };
 
@@ -321,11 +385,28 @@ export default function LiveTranslate() {
                 <Typography variant="caption" sx={{ fontWeight: 800, color: 'var(--text-main)', letterSpacing: 0.5 }}>
                   INPUT TEXT ({LANGUAGES.find(l => l.code === sourceLang)?.name.toUpperCase()})
                 </Typography>
-                {inputText && (
-                  <IconButton size="small" onClick={() => setInputText('')}>
-                    <ClearIcon fontSize="small" />
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                  <IconButton 
+                    size="small" 
+                    onClick={handleToggleListening} 
+                    color={listening ? 'error' : 'primary'}
+                    sx={{
+                      animation: listening ? 'pulse 1.5s infinite' : 'none',
+                      '@keyframes pulse': {
+                        '0%': { transform: 'scale(1)', opacity: 1 },
+                        '50%': { transform: 'scale(1.15)', opacity: 0.7 },
+                        '100%': { transform: 'scale(1)', opacity: 1 }
+                      }
+                    }}
+                  >
+                    {listening ? <MicOffIcon fontSize="small" /> : <MicIcon fontSize="small" />}
                   </IconButton>
-                )}
+                  {inputText && (
+                    <IconButton size="small" onClick={handleClear}>
+                      <ClearIcon fontSize="small" />
+                    </IconButton>
+                  )}
+                </Box>
               </Box>
 
               <TextField
@@ -336,6 +417,7 @@ export default function LiveTranslate() {
                 value={inputText}
                 onChange={(e) => {
                   setInputText(e.target.value);
+                  setIsDictated(false);
                   setStatus('Idle');
                 }}
                 sx={{

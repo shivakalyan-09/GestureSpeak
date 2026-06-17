@@ -4,10 +4,11 @@ import {
   IconButton, Alert, Table, TableBody, TableCell,
   TableContainer, TableHead, TableRow, Paper, Tabs, Tab,
   Dialog, DialogTitle, DialogContent, DialogActions,
-  CircularProgress, MenuItem, Modal
+  CircularProgress, MenuItem, Modal, Tooltip, InputAdornment,
+  Avatar
 } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
-import { BACKEND_URL } from '../context/AuthContext';
+import { getBackendUrl } from '../context/AuthContext';
 import {
   SmsFailed as AlertIcon,
   VolumeUp as SirenIcon,
@@ -20,7 +21,13 @@ import {
   MyLocation as LocationIcon,
   History as HistoryIcon,
   People as PeopleIcon,
-  CheckCircleOutlined as SuccessIcon
+  CheckCircleOutlined as SuccessIcon,
+  Phone as PhoneIcon,
+  Email as EmailIcon,
+  Person as PersonIcon,
+  FamilyRestroom as RelationshipIcon,
+  Close as CloseIcon,
+  PersonAdd as PersonAddIcon
 } from '@mui/icons-material';
 
 interface Contact {
@@ -46,6 +53,41 @@ interface SosLog {
   contactsNotified: number;
   status: 'SENT' | 'FAILED';
 }
+
+const getRelationshipColors = (relationship: string) => {
+  switch (relationship) {
+    case 'Spouse':
+      return { bg: 'rgba(244, 63, 94, 0.1)', text: '#f43f5e', border: 'rgba(244, 63, 94, 0.2)' };
+    case 'Parent':
+      return { bg: 'rgba(249, 115, 22, 0.1)', text: '#f97316', border: 'rgba(249, 115, 22, 0.2)' };
+    case 'Sibling':
+      return { bg: 'rgba(59, 130, 246, 0.1)', text: '#3b82f6', border: 'rgba(59, 130, 246, 0.2)' };
+    case 'Child':
+      return { bg: 'rgba(16, 185, 129, 0.1)', text: '#10b981', border: 'rgba(16, 185, 129, 0.2)' };
+    case 'Friend':
+      return { bg: 'rgba(245, 158, 11, 0.1)', text: '#f59e0b', border: 'rgba(245, 158, 11, 0.2)' };
+    case 'Guardian':
+      return { bg: 'rgba(139, 92, 246, 0.1)', text: '#8b5cf6', border: 'rgba(139, 92, 246, 0.2)' };
+    case 'Doctor':
+      return { bg: 'rgba(6, 182, 212, 0.1)', text: '#06b6d4', border: 'rgba(6, 182, 212, 0.2)' };
+    case 'Emergency Service':
+      return { bg: 'rgba(239, 68, 68, 0.12)', text: '#ef4444', border: 'rgba(239, 68, 68, 0.25)' };
+    default:
+      return { bg: 'rgba(100, 116, 139, 0.1)', text: '#64748b', border: 'rgba(100, 116, 139, 0.2)' };
+  }
+};
+
+const getAvatarGradient = (name: string) => {
+  const code = (name || '').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % 5;
+  const gradients = [
+    'linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%)',
+    'linear-gradient(135deg, #ec4899 0%, #f43f5e 100%)',
+    'linear-gradient(135deg, #10b981 0%, #3b82f6 100%)',
+    'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)',
+    'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)',
+  ];
+  return gradients[code];
+};
 
 export default function Emergency() {
   const { token } = useAuth();
@@ -96,14 +138,14 @@ export default function Emergency() {
   const fetchContactsAndLogs = async () => {
     if (!token) return;
     try {
-      const contactsRes = await fetch(`${BACKEND_URL}/api/emergency/contacts`, {
+      const contactsRes = await fetch(`${getBackendUrl()}/api/emergency/contacts`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (contactsRes.ok) {
         setContacts(await contactsRes.json());
       }
       
-      const logsRes = await fetch(`${BACKEND_URL}/api/emergency/logs`, {
+      const logsRes = await fetch(`${getBackendUrl()}/api/emergency/logs`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (logsRes.ok) {
@@ -271,7 +313,7 @@ export default function Emergency() {
     const mapsUrl = `https://maps.google.com/?q=${lat},${lng}`;
     
     try {
-      const res = await fetch(`${BACKEND_URL}/api/emergency/send-sos`, {
+      const res = await fetch(`${getBackendUrl()}/api/emergency/send-sos`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -369,6 +411,10 @@ export default function Emergency() {
       setFormError("Phone number must start with '+' followed by your country code (e.g., +91 for India).");
       return;
     }
+    if (!/^\+[0-9]+$/.test(formPhone.trim())) {
+      setFormError("Phone number must contain numeric digits only after the '+' prefix.");
+      return;
+    }
     const phoneDigits = formPhone.replace(/[^\d+]/g, '');
     if (phoneDigits.length < 10) {
       setFormError("Please enter a valid phone number including country code (at least 10 digits).");
@@ -401,7 +447,7 @@ export default function Emergency() {
     };
 
     try {
-      const res = await fetch(`${BACKEND_URL}/api/emergency/contacts`, {
+      const res = await fetch(`${getBackendUrl()}/api/emergency/contacts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -435,7 +481,7 @@ export default function Emergency() {
   const handleDeleteContact = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this contact?")) return;
     try {
-      const res = await fetch(`${BACKEND_URL}/api/emergency/contacts/${id}`, {
+      const res = await fetch(`${getBackendUrl()}/api/emergency/contacts/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -449,7 +495,7 @@ export default function Emergency() {
 
   const handleSetPrimary = async (id: string) => {
     try {
-      const res = await fetch(`${BACKEND_URL}/api/emergency/contacts/primary/${id}`, {
+      const res = await fetch(`${getBackendUrl()}/api/emergency/contacts/primary/${id}`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -467,7 +513,7 @@ export default function Emergency() {
   const handleClearLogs = async () => {
     if (!window.confirm("Are you sure you want to clear all history logs?")) return;
     try {
-      const res = await fetch(`${BACKEND_URL}/api/emergency/logs`, {
+      const res = await fetch(`${getBackendUrl()}/api/emergency/logs`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -721,83 +767,338 @@ export default function Emergency() {
 
       {/* TAB 1: EMERGENCY CONTACTS */}
       {tabValue === 1 && (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant="h6" sx={{ fontWeight: 800, color: 'var(--text-main)' }}>
-              Emergency Contacts List ({contacts.length} / 5)
+            <Typography variant="h5" sx={{ fontWeight: 900, color: 'var(--text-main)', letterSpacing: -0.5 }}>
+              Emergency Contacts Circle
             </Typography>
             <Button
               variant="contained"
               startIcon={<AddIcon />}
               onClick={handleOpenAddContact}
               disabled={contacts.length >= 5}
-              sx={{ borderRadius: '12px', fontWeight: 700 }}
+              sx={{ 
+                borderRadius: '12px', 
+                fontWeight: 800, 
+                px: 2.5,
+                py: 1,
+                boxShadow: '0 4px 14px 0 var(--btn-shadow)',
+                '&:hover': {
+                  boxShadow: '0 6px 20px 0 var(--btn-shadow-hover)'
+                }
+              }}
             >
               Add Contact
             </Button>
           </Box>
 
-          <Card className="glass-card">
-            <CardContent sx={{ p: 3 }}>
-              {contacts.length > 0 ? (
-                <TableContainer component={Paper} elevation={0} sx={{ background: 'transparent' }}>
-                  <Table size="medium">
-                    <TableHead>
-                      <TableRow sx={{ '& th': { borderBottom: '1px solid var(--border-glass)', color: 'var(--text-sub)', fontWeight: 800 } }}>
-                        <TableCell>Primary</TableCell>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Relationship</TableCell>
-                        <TableCell>Mobile Phone</TableCell>
-                        <TableCell>Email</TableCell>
-                        <TableCell align="right">Actions</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {contacts.map((contact) => (
-                        <TableRow key={contact.id} sx={{ '& td': { borderBottom: '1px solid var(--border-glass)', color: 'var(--text-main)' } }}>
-                          <TableCell>
-                            <IconButton onClick={() => handleSetPrimary(contact.id)}>
-                              {contact.isPrimary ? <StarIcon color="warning" /> : <StarBorderIcon />}
-                            </IconButton>
-                          </TableCell>
-                          <TableCell sx={{ fontWeight: 700 }}>{contact.name}</TableCell>
-                          <TableCell>
-                            <Box sx={{ px: 1.5, py: 0.5, borderRadius: '8px', background: 'action.hover', border: '1px solid var(--border-glass)', display: 'inline-block', fontSize: '0.8rem', fontWeight: 700 }}>
+          {contacts.length > 0 ? (
+            <Box 
+              sx={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))', 
+                gap: 3.5 
+              }}
+            >
+              {contacts.map((contact) => {
+                const relColors = getRelationshipColors(contact.relationship);
+                const avatarGradient = getAvatarGradient(contact.name);
+                return (
+                  <Card 
+                    key={contact.id} 
+                    className="glass-card" 
+                    sx={{ 
+                      position: 'relative', 
+                      overflow: 'visible',
+                      transition: 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease',
+                      border: contact.isPrimary ? '2px solid var(--accent-neon-blue, #4facfe)' : '1.5px solid var(--border-glass)',
+                      borderRadius: '24px',
+                      '&:hover': {
+                        transform: 'translateY(-6px)',
+                        boxShadow: contact.isPrimary 
+                          ? '0 12px 32px -10px rgba(79, 172, 254, 0.35)' 
+                          : 'var(--shadow-glass)'
+                      }
+                    }}
+                  >
+                    {/* Primary Star Action Pin */}
+                    <Box sx={{ position: 'absolute', top: 16, right: 16 }}>
+                      <Tooltip title={contact.isPrimary ? "Primary Responder" : "Set as Primary Responder"} arrow>
+                        <IconButton 
+                          onClick={() => handleSetPrimary(contact.id)}
+                          sx={{
+                            color: contact.isPrimary ? '#eab308' : 'var(--text-sub)',
+                            background: contact.isPrimary ? 'rgba(234, 179, 8, 0.12)' : 'rgba(0,0,0,0.02)',
+                            padding: '8px',
+                            transition: 'all 0.3s ease',
+                            '&:hover': {
+                              transform: 'rotate(72deg) scale(1.15)',
+                              color: '#eab308',
+                              background: 'rgba(234, 179, 8, 0.2)'
+                            }
+                          }}
+                        >
+                          {contact.isPrimary ? <StarIcon sx={{ fontSize: '1.4rem' }} /> : <StarBorderIcon sx={{ fontSize: '1.4rem' }} />}
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+
+                    <CardContent sx={{ p: 3, display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+                      <Box>
+                        {/* Avatar & Relationship Badge */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2.2, mb: 3 }}>
+                          <Avatar 
+                            sx={{ 
+                              width: 52, 
+                              height: 52, 
+                              background: avatarGradient, 
+                              fontWeight: 900,
+                              fontSize: '1.3rem',
+                              color: '#ffffff',
+                              boxShadow: '0 4px 12px 0 rgba(0,0,0,0.12)'
+                            }}
+                          >
+                            {contact.name.substring(0, 1).toUpperCase()}
+                          </Avatar>
+                          <Box sx={{ minWidth: 0, flexGrow: 1, pr: 3 }}>
+                            <Typography 
+                              variant="subtitle1" 
+                              noWrap 
+                              sx={{ 
+                                fontWeight: 800, 
+                                color: 'var(--text-main)', 
+                                fontSize: '1.05rem', 
+                                mb: 0.5,
+                                letterSpacing: -0.2
+                              }}
+                            >
+                              {contact.name}
+                            </Typography>
+                            <Box 
+                              sx={{ 
+                                px: 1.5, 
+                                py: 0.5, 
+                                borderRadius: '12px', 
+                                background: relColors.bg, 
+                                color: relColors.text,
+                                border: `1.5px solid ${relColors.border}`,
+                                display: 'inline-block', 
+                                fontSize: '0.72rem', 
+                                fontWeight: 800,
+                                textTransform: 'uppercase',
+                                letterSpacing: 0.8
+                              }}
+                            >
                               {contact.relationship}
                             </Box>
-                          </TableCell>
-                          <TableCell>{contact.phoneNumber}</TableCell>
-                          <TableCell>{contact.email || '-'}</TableCell>
-                          <TableCell align="right">
-                            <IconButton color="primary" onClick={() => handleOpenEditContact(contact)} sx={{ mr: 1 }}>
-                              <EditIcon />
-                            </IconButton>
-                            <IconButton color="error" onClick={() => handleDeleteContact(contact.id)}>
-                              <DeleteIcon />
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              ) : (
-                <Box sx={{ textAlign: 'center', py: 6 }}>
-                  <Typography variant="body1" sx={{ color: 'var(--text-sub)', mb: 2 }}>
-                    No emergency contacts configured yet.
-                  </Typography>
-                  <Button
-                    variant="outlined"
-                    startIcon={<AddIcon />}
-                    onClick={handleOpenAddContact}
-                    sx={{ borderRadius: '12px' }}
+                          </Box>
+                        </Box>
+
+                        {/* Detail Info Fields */}
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 3.5 }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.8 }}>
+                            <Box 
+                              sx={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                justifyContent: 'center',
+                                width: 28, 
+                                height: 28, 
+                                borderRadius: '8px', 
+                                background: 'rgba(79, 70, 229, 0.08)',
+                                color: 'primary.main'
+                              }}
+                            >
+                              <PhoneIcon sx={{ fontSize: '1.05rem' }} />
+                            </Box>
+                            <Typography variant="body2" sx={{ color: 'var(--text-main)', fontWeight: 600 }}>
+                              {contact.phoneNumber}
+                            </Typography>
+                          </Box>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.8 }}>
+                            <Box 
+                              sx={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                justifyContent: 'center',
+                                width: 28, 
+                                height: 28, 
+                                borderRadius: '8px', 
+                                background: 'rgba(219, 39, 119, 0.08)',
+                                color: 'secondary.main'
+                              }}
+                            >
+                              <EmailIcon sx={{ fontSize: '1.05rem' }} />
+                            </Box>
+                            <Typography 
+                              variant="body2" 
+                              noWrap 
+                              sx={{ 
+                                color: contact.email ? 'var(--text-main)' : 'var(--text-sub)', 
+                                fontWeight: contact.email ? 600 : 400,
+                                fontSize: '0.85rem'
+                              }}
+                            >
+                              {contact.email || 'No email configured'}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </Box>
+
+                      {/* Card Footer Actions */}
+                      <Box 
+                        sx={{ 
+                          display: 'flex', 
+                          gap: 1.5, 
+                          borderTop: '1px solid var(--border-glass)', 
+                          pt: 2.2, 
+                          justifyContent: 'flex-end' 
+                        }}
+                      >
+                        <Button 
+                          size="small" 
+                          variant="outlined" 
+                          startIcon={<EditIcon />} 
+                          onClick={() => handleOpenEditContact(contact)}
+                          sx={{ 
+                            borderRadius: '10px', 
+                            fontWeight: 700, 
+                            px: 2, 
+                            fontSize: '0.8rem',
+                            borderWidth: '1.5px',
+                            '&:hover': { borderWidth: '1.5px' }
+                          }}
+                        >
+                          Edit
+                        </Button>
+                        <Button 
+                          size="small" 
+                          variant="outlined" 
+                          color="error" 
+                          startIcon={<DeleteIcon />} 
+                          onClick={() => handleDeleteContact(contact.id)}
+                          sx={{ 
+                            borderRadius: '10px', 
+                            fontWeight: 700, 
+                            px: 2, 
+                            fontSize: '0.8rem',
+                            borderWidth: '1.5px',
+                            '&:hover': { borderWidth: '1.5px' }
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+
+              {/* Visual Add Contact Interactive Dash-Slot Card */}
+              {contacts.length < 5 && (
+                <Card 
+                  onClick={handleOpenAddContact}
+                  sx={{
+                    minHeight: 250,
+                    border: '2px dashed var(--border-glass)',
+                    borderRadius: '24px',
+                    backgroundColor: 'rgba(0, 0, 0, 0.01)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    p: 3,
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    boxShadow: 'none',
+                    backgroundImage: 'none',
+                    '&:hover': {
+                      borderColor: 'primary.main',
+                      backgroundColor: 'action.hover',
+                      transform: 'scale(1.02)'
+                    }
+                  }}
+                >
+                  <Box 
+                    sx={{ 
+                      width: 56, 
+                      height: 56, 
+                      borderRadius: '50%', 
+                      background: 'action.selected', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      mb: 2,
+                      color: 'primary.main',
+                      boxShadow: '0 4px 12px 0 rgba(0, 0, 0, 0.04)'
+                    }}
                   >
-                    Add Your First Contact
-                  </Button>
-                </Box>
+                    <AddIcon sx={{ fontSize: '1.85rem' }} />
+                  </Box>
+                  <Typography variant="subtitle1" sx={{ fontWeight: 800, color: 'var(--text-main)' }}>
+                    Add Contact Slot
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: 'var(--text-sub)', mt: 0.5, textAlign: 'center', maxW: 200 }}>
+                    Configure up to 5 contacts to notify in an emergency.
+                  </Typography>
+                </Card>
               )}
-            </CardContent>
-          </Card>
+            </Box>
+          ) : (
+            <Box 
+              sx={{ 
+                textAlign: 'center', 
+                py: 8, 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center',
+                backgroundColor: 'var(--bg-card)',
+                borderRadius: '24px',
+                border: '1px solid var(--border-glass)',
+                p: 4
+              }}
+            >
+              <Box 
+                sx={{ 
+                  width: 80, 
+                  height: 80, 
+                  borderRadius: '50%', 
+                  background: 'action.hover', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  mb: 3,
+                  color: 'var(--text-sub)',
+                  opacity: 0.6
+                }}
+              >
+                <PeopleIcon sx={{ fontSize: 40 }} />
+              </Box>
+              <Typography variant="h6" sx={{ color: 'var(--text-main)', fontWeight: 800, mb: 1 }}>
+                No Emergency Contacts
+              </Typography>
+              <Typography variant="body2" sx={{ color: 'var(--text-sub)', maxW: 360, mb: 4, lineHeight: 1.6 }}>
+                Your Emergency Circle is empty. Add contacts now so you can immediately notify them with your live location coordinates in an SOS alert event.
+              </Typography>
+              <Button
+                variant="contained"
+                startIcon={<AddIcon />}
+                onClick={handleOpenAddContact}
+                sx={{ 
+                  borderRadius: '12px',
+                  fontWeight: 800,
+                  px: 3,
+                  py: 1.2,
+                  boxShadow: '0 4px 14px 0 var(--btn-shadow)',
+                  '&:hover': {
+                    boxShadow: '0 6px 20px 0 var(--btn-shadow-hover)'
+                  }
+                }}
+              >
+                Add Your First Contact
+              </Button>
+            </Box>
+          )}
         </Box>
       )}
 
@@ -1017,8 +1318,9 @@ export default function Emergency() {
             style: {
               borderRadius: '24px',
               backgroundColor: 'var(--bg-card)',
-              border: '1px solid var(--border-glass)',
-              padding: '12px',
+              backdropFilter: 'blur(16px)',
+              border: '1.5px solid var(--border-glass)',
+              padding: '16px',
               width: '100%',
               maxWidth: 450
             }
@@ -1026,10 +1328,31 @@ export default function Emergency() {
         }}
       >
         <form noValidate onSubmit={handleSaveContact} style={{ width: '100%' }}>
-          <DialogTitle sx={{ fontWeight: 900, color: 'var(--text-main)' }}>
-            {editingContact ? "EDIT EMERGENCY CONTACT" : "ADD NEW CONTACT"}
+          <DialogTitle sx={{ fontWeight: 900, color: 'var(--text-main)', pb: 1, display: 'flex', alignItems: 'center', gap: 1.5, position: 'relative' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 38, height: 38, borderRadius: '10px', background: 'action.selected', color: editingContact ? 'secondary.main' : 'primary.main' }}>
+              {editingContact ? <EditIcon sx={{ fontSize: '1.2rem' }} /> : <PersonAddIcon sx={{ fontSize: '1.2rem' }} />}
+            </Box>
+            <Typography variant="h6" component="span" sx={{ fontWeight: 900, fontSize: '1.2rem', letterSpacing: -0.2 }}>
+              {editingContact ? "Edit Emergency Contact" : "Add New Contact"}
+            </Typography>
+            <IconButton
+              aria-label="close"
+              onClick={() => setOpenAddEditDialog(false)}
+              sx={{
+                position: 'absolute',
+                right: 12,
+                top: 12,
+                color: 'var(--text-sub)',
+                '&:hover': {
+                  color: 'var(--text-main)'
+                }
+              }}
+            >
+              <CloseIcon sx={{ fontSize: '1.3rem' }} />
+            </IconButton>
           </DialogTitle>
-          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, mt: 1 }}>
+          
+          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 3, mt: 1.5, pb: 1 }}>
             {formError && (
               <Alert severity="error" sx={{ borderRadius: '12px' }}>
                 {formError}
@@ -1042,6 +1365,15 @@ export default function Emergency() {
               fullWidth
               value={formName}
               onChange={(e) => setFormName(e.target.value)}
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PersonIcon sx={{ color: 'primary.main', opacity: 0.8, mr: 0.5 }} />
+                    </InputAdornment>
+                  ),
+                }
+              }}
               sx={{
                 '& .MuiOutlinedInput-root': {
                   borderRadius: '12px',
@@ -1058,6 +1390,15 @@ export default function Emergency() {
               fullWidth
               value={formRelationship}
               onChange={(e) => setFormRelationship(e.target.value)}
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <RelationshipIcon sx={{ color: 'primary.main', opacity: 0.8, mr: 0.5 }} />
+                    </InputAdornment>
+                  ),
+                }
+              }}
               sx={{
                 '& .MuiOutlinedInput-root': {
                   borderRadius: '12px',
@@ -1085,6 +1426,15 @@ export default function Emergency() {
               value={formPhone}
               onChange={(e) => setFormPhone(e.target.value)}
               helperText="Include country code, digits only (e.g. +1...)"
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PhoneIcon sx={{ color: 'primary.main', opacity: 0.8, mr: 0.5 }} />
+                    </InputAdornment>
+                  ),
+                }
+              }}
               sx={{
                 '& .MuiOutlinedInput-root': {
                   borderRadius: '12px',
@@ -1100,6 +1450,15 @@ export default function Emergency() {
               fullWidth
               value={formEmail}
               onChange={(e) => setFormEmail(e.target.value)}
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <EmailIcon sx={{ color: 'secondary.main', opacity: 0.8, mr: 0.5 }} />
+                    </InputAdornment>
+                  ),
+                }
+              }}
               sx={{
                 '& .MuiOutlinedInput-root': {
                   borderRadius: '12px',
@@ -1109,11 +1468,31 @@ export default function Emergency() {
               }}
             />
           </DialogContent>
-          <DialogActions sx={{ px: 3, pb: 2 }}>
-            <Button onClick={() => setOpenAddEditDialog(false)} sx={{ color: 'var(--text-sub)', fontWeight: 700 }}>
+          
+          <DialogActions sx={{ px: 3, pb: 2, pt: 1.5, gap: 1 }}>
+            <Button 
+              onClick={() => setOpenAddEditDialog(false)} 
+              sx={{ 
+                color: 'var(--text-sub)', 
+                fontWeight: 700,
+                borderRadius: '10px'
+              }}
+            >
               Cancel
             </Button>
-            <Button type="submit" variant="contained" sx={{ borderRadius: '12px', fontWeight: 800, px: 3 }}>
+            <Button 
+              type="submit" 
+              variant="contained" 
+              sx={{ 
+                borderRadius: '12px', 
+                fontWeight: 800, 
+                px: 3.5,
+                boxShadow: '0 4px 14px 0 var(--btn-shadow)',
+                '&:hover': {
+                  boxShadow: '0 6px 20px 0 var(--btn-shadow-hover)'
+                }
+              }}
+            >
               Save Contact
             </Button>
           </DialogActions>

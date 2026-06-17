@@ -28,6 +28,11 @@ export default function Register() {
       return;
     }
 
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
     setSigningUp(true);
     try {
       await register(email, password, username);

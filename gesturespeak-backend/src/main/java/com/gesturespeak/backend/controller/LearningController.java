@@ -1,16 +1,20 @@
 package com.gesturespeak.backend.controller;
 
 import com.gesturespeak.backend.model.LearningItem;
+import com.gesturespeak.backend.model.LearningSession;
+import com.gesturespeak.backend.model.Activity;
 import com.gesturespeak.backend.service.FirebaseService;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,9 +26,22 @@ public class LearningController {
     // Seeding mock database of learning materials
     private static final Map<String, LearningItem> seededItems = new ConcurrentHashMap<>();
 
+    // User-specific progress fallback map for in-memory mode
+    private static final Map<String, Map<String, Integer>> mockUserLearningProgress = new ConcurrentHashMap<>();
+
     public LearningController(FirebaseService firebaseService) {
         this.firebaseService = firebaseService;
         seedLearningContent();
+    }
+
+    private String getAuthUserId() {
+        try {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (principal instanceof String) {
+                return (String) principal;
+            }
+        } catch (Exception ignored) {}
+        return null;
     }
 
     private void seedLearningContent() {
@@ -62,22 +79,38 @@ public class LearningController {
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String search) {
 
-        List<LearningItem> items = new ArrayList<>(seededItems.values());
+        String uid = getAuthUserId();
+        Map<String, Integer> userProgress = new HashMap<>();
 
-        // Sync from Firestore if available
-        if (firebaseService.isFirebaseInitialized()) {
-            try {
-                Firestore db = firebaseService.getDb();
-                QuerySnapshot query = db.collection("learningContent").get().get();
-                List<LearningItem> dbItems = query.getDocuments().stream()
-                        .map(doc -> doc.toObject(LearningItem.class))
-                        .collect(Collectors.toList());
-                if (!dbItems.isEmpty()) {
-                    items = dbItems;
+        if (uid != null) {
+            if (firebaseService.isFirebaseInitialized()) {
+                try {
+                    Firestore db = firebaseService.getDb();
+                    QuerySnapshot progressQuery = db.collection("users").document(uid).collection("learningProgress").get().get();
+                    for (QueryDocumentSnapshot doc : progressQuery.getDocuments()) {
+                        String itemId = doc.getId();
+                        Integer prog = doc.getLong("progress") != null ? doc.getLong("progress").intValue() : 0;
+                        userProgress.put(itemId, prog);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Firestore learning progress fetch failed: " + e.getMessage());
                 }
-            } catch (Exception e) {
-                System.err.println("Firestore learning items sync failed: " + e.getMessage());
+            } else {
+                userProgress = mockUserLearningProgress.getOrDefault(uid, new HashMap<>());
             }
+        }
+
+        List<LearningItem> items = new ArrayList<>();
+        for (LearningItem item : seededItems.values()) {
+            LearningItem copy = new LearningItem(
+                    item.getId(),
+                    item.getCategory(),
+                    item.getTitle(),
+                    item.getDescription(),
+                    item.getAnimationUrl(),
+                    userProgress.getOrDefault(item.getId(), 0)
+            );
+            items.add(copy);
         }
 
         // Filter
@@ -97,19 +130,70 @@ public class LearningController {
 
     @PostMapping("/progress/{id}")
     public ResponseEntity<?> updateProgress(@PathVariable String id, @RequestParam Integer progress) {
+        String uid = getAuthUserId();
+        if (uid == null) {
+            uid = "mock-user-uid";
+        }
+
         LearningItem item = seededItems.get(id);
         if (item != null) {
-            item.setProgress(progress);
-            
+            // Save to user-specific progress map/collection
             if (firebaseService.isFirebaseInitialized()) {
                 try {
                     Firestore db = firebaseService.getDb();
-                    db.collection("learningContent").document(id).set(item).get();
+                    Map<String, Object> progressData = new HashMap<>();
+                    progressData.put("progress", progress);
+                    progressData.put("updatedAt", System.currentTimeMillis());
+                    
+                    db.collection("users").document(uid).collection("learningProgress").document(id).set(progressData).get();
                 } catch (Exception e) {
-                    System.err.println("Firestore progress update failed: " + e.getMessage());
+                    System.err.println("Firestore learning progress update failed: " + e.getMessage());
                 }
+            } else {
+                mockUserLearningProgress.computeIfAbsent(uid, k -> new ConcurrentHashMap<>()).put(id, progress);
             }
-            return ResponseEntity.ok(item);
+
+            // Save LearningSession for analytics
+            LearningSession session = new LearningSession(
+                    UUID.randomUUID().toString(),
+                    uid,
+                    id,
+                    item.getCategory(),
+                    progress,
+                    System.currentTimeMillis()
+            );
+
+            // Save Activity for analytics
+            Activity activity = new Activity(
+                    UUID.randomUUID().toString(),
+                    uid,
+                    "learning_session",
+                    System.currentTimeMillis(),
+                    "Completed learning: " + item.getCategory() + " " + item.getTitle()
+            );
+
+            if (firebaseService.isFirebaseInitialized()) {
+                try {
+                    Firestore db = firebaseService.getDb();
+                    db.collection("learningSessions").document(session.getId()).set(session);
+                    db.collection("activities").document(activity.getId()).set(activity);
+                } catch (Exception e) {
+                    System.err.println("Firestore learning analytics save failed: " + e.getMessage());
+                }
+            } else {
+                AnalyticsController.mockLearningSessions.computeIfAbsent(uid, k -> new CopyOnWriteArrayList<>()).add(session);
+                AnalyticsController.mockActivities.computeIfAbsent(uid, k -> new CopyOnWriteArrayList<>()).add(activity);
+            }
+
+            LearningItem responseItem = new LearningItem(
+                    item.getId(),
+                    item.getCategory(),
+                    item.getTitle(),
+                    item.getDescription(),
+                    item.getAnimationUrl(),
+                    progress
+            );
+            return ResponseEntity.ok(responseItem);
         }
         return ResponseEntity.notFound().build();
     }

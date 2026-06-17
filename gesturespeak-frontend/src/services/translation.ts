@@ -1,3 +1,5 @@
+import { BACKEND_URL } from '../context/AuthContext';
+
 export const LANGUAGES = [
   { name: 'English', code: 'en', locale: 'en-US' },
   { name: 'Telugu', code: 'te', locale: 'te-IN' },
@@ -23,7 +25,7 @@ export async function translateText(text: string, targetLangCode: string, source
     return text;
   }
 
-  const url = `http://localhost:8080/api/translate`;
+  const url = `${BACKEND_URL}/api/translate`;
   console.log("Translation API Request (Backend):", url);
 
   try {

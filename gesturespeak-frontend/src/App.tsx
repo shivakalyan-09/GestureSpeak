@@ -96,10 +96,10 @@ export default function App() {
     palette: {
       mode: themeMode,
       primary: {
-        main: '#4facfe',
+        main: themeMode === 'dark' ? '#4facfe' : '#4f46e5',
       },
       secondary: {
-        main: '#ec38bc',
+        main: themeMode === 'dark' ? '#ec38bc' : '#db2777',
       },
       background: {
         default: themeMode === 'dark' ? '#030712' : '#f1f5f9',
