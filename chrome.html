@@ -318,19 +318,19 @@
       </div>
       <div class="card">
         <div class="card-title">Pass Rate</div>
-        <div class="card-value color-success">100.0%</div>
+        <div class="card-value color-success">97.5%</div>
       </div>
       <div class="card">
         <div class="card-title">Passed / Total</div>
-        <div class="card-value color-success">19 / 19</div>
+        <div class="card-value color-success">79 / 81</div>
       </div>
       <div class="card">
         <div class="card-title">Failed</div>
-        <div class="card-value color-error">0</div>
+        <div class="card-value color-error">2</div>
       </div>
       <div class="card">
         <div class="card-title">Duration</div>
-        <div class="card-value color-warning">59.0s</div>
+        <div class="card-value color-warning">155.0s</div>
       </div>
     </div>
     
@@ -442,11 +442,11 @@
           <h3 class="test-name">Login Input Fields Empty Validations</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on the login page.</p>
-            <p><strong>Expected:</strong> HTML5 required field constraints prevent form submission and highlight inputs.</p>
+            <p><strong>Expected:</strong> HTML5 required field constraints prevent form submission.</p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Navigating to login URL</li><li>Clearing session for isolation</li><li>Submitting empty login form</li><li>Verifying email field is marked invalid / empty check</li></ol>
+              <ol><li>Navigating to login URL</li><li>Submitting empty login form</li><li>Verifying email field is marked invalid / empty check</li></ol>
             </div>
             
           </div>
@@ -460,14 +460,434 @@
             <span class="badge badge-pass">PASS</span>
             
           </div>
-          <h3 class="test-name">Invalid Email Format Validation</h3>
+          <h3 class="test-name">Login Email Required Validation</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on the login page.</p>
-            <p><strong>Expected:</strong> Email input uses HTML5 type="email" which restricts non-compliant format submissions.</p>
+            <p><strong>Expected:</strong> Form submission is blocked because email field is empty and marked required.</p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Navigating to login URL</li><li>Clearing session for isolation</li><li>Entering email with invalid format</li><li>Verifying email field input type is set to email</li></ol>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-07">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-07</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Login Password Required Validation</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on the login page.</p>
+            <p><strong>Expected:</strong> Form submission is blocked because password field is empty and marked required.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-08">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-08</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Invalid Email Format Validation - Missing @ character</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on the login page.</p>
+            <p><strong>Expected:</strong> Email validation flags format as invalid.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-09">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-09</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Invalid Email Format Validation - Missing Domain Name</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on the login page.</p>
+            <p><strong>Expected:</strong> Email validation blocks submission due to missing domain name.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-10">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-10</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Invalid Email Format Validation - Leading Spaces</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on the login page.</p>
+            <p><strong>Expected:</strong> Email validation identifies leading space as invalid format.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-11">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-11</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Invalid Email Format Validation - Special Characters in Domain</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on the login page.</p>
+            <p><strong>Expected:</strong> Special characters in domain are blocked.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-12">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-12</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Invalid Email Format Validation - No dot in domain</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on the login page.</p>
+            <p><strong>Expected:</strong> Missing dot in domain is flagged by standard email validators.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-13">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-13</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Register View - Navigate to Register Form</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on login page.</p>
+            <p><strong>Expected:</strong> User is redirected to the sign up page successfully.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-14">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-14</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Register Form - Empty Name validation</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on register page.</p>
+            <p><strong>Expected:</strong> Sign up is blocked and username input is highlighted.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-15">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-15</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Register Form - Empty Email validation</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on register page.</p>
+            <p><strong>Expected:</strong> Sign up is blocked and email input is highlighted.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-16">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-16</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Register Form - Empty Password validation</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on register page.</p>
+            <p><strong>Expected:</strong> Sign up is blocked due to empty password.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-17">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-17</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Register Form - Empty Confirm Password validation</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on register page.</p>
+            <p><strong>Expected:</strong> Sign up is blocked due to empty confirm password.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-18">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-18</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Register Form - Password mismatch validation</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on register page.</p>
+            <p><strong>Expected:</strong> System shows alert indicating passwords do not match.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-19">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-19</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Register Form - Short Password boundary check (<6 characters)</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on register page.</p>
+            <p><strong>Expected:</strong> Registration fails with a short password warning alert.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-20">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-20</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Register Form - Invalid Email Format</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on register page.</p>
+            <p><strong>Expected:</strong> Email input block submits matching type="email".</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-21">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-21</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Register Form - Success Mock Registration Bypass</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on register page.</p>
+            <p><strong>Expected:</strong> New account registration mock bypass completes successfully and redirects user to dashboard.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-22">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-22</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Forgot Password View - Navigate to Reset Request page</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on login page.</p>
+            <p><strong>Expected:</strong> User loads the forgot password instructions workspace view.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-23">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-23</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Forgot Password - Empty Email validation</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on Forgot Password page.</p>
+            <p><strong>Expected:</strong> Field validation blocks forgot password submit.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-24">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-24</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Forgot Password - Invalid Email format check</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on Forgot Password page.</p>
+            <p><strong>Expected:</strong> Email validation blocks malformed email input.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-AUTH-25">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">AUTH-25</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Forgot Password - Back to Login link check</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on Forgot Password page.</p>
+            <p><strong>Expected:</strong> User returns to login view.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-NAV-PRE">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">NAV-PRE</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Navigate Setup: Logging in</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on login page.</p>
+            <p><strong>Expected:</strong> Preconditions established.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
             </div>
             
           </div>
@@ -481,14 +901,14 @@
             <span class="badge badge-pass">PASS</span>
             
           </div>
-          <h3 class="test-name">Verify Sidebar Navigation Links & Page Titles</h3>
+          <h3 class="test-name">Verify Sidebar Navigation - Dashboard Panel redirect</h3>
           <div class="test-details">
-            <p><strong>Preconditions:</strong> User is logged in as a normal user.</p>
-            <p><strong>Expected:</strong> All sidebar links function correctly and load their respective page components with matching header titles.</p>
+            <p><strong>Preconditions:</strong> User is logged in on dashboard.</p>
+            <p><strong>Expected:</strong> Dashboard page loaded.</p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Navigating to login page</li><li>Clearing session for test isolation</li><li>Logging in as standard mock user</li><li>Navigating to Settings via sidebar</li><li>Navigating to History Log via sidebar</li><li>Navigating to Emergency SOS via sidebar</li><li>Navigating to Learning Hub via sidebar</li><li>Navigating back to Dashboard via sidebar</li></ol>
+              <ol></ol>
             </div>
             
           </div>
@@ -502,14 +922,14 @@
             <span class="badge badge-pass">PASS</span>
             
           </div>
-          <h3 class="test-name">Verify Browser Back & Forward Navigation</h3>
+          <h3 class="test-name">Verify Sidebar Navigation - Sign Detection page load</h3>
           <div class="test-details">
-            <p><strong>Preconditions:</strong> User is logged in on the Dashboard.</p>
-            <p><strong>Expected:</strong> React Router handles history stacks gracefully and coordinates back/forward requests without crashes.</p>
+            <p><strong>Preconditions:</strong> User is logged in.</p>
+            <p><strong>Expected:</strong> Sign Language Detection Workspace page loads correctly.</p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Navigating to Settings page</li><li>Triggering browser Back navigation</li><li>Triggering browser Forward navigation</li></ol>
+              <ol></ol>
             </div>
             
           </div>
@@ -523,14 +943,14 @@
             <span class="badge badge-pass">PASS</span>
             
           </div>
-          <h3 class="test-name">Verify Role-Based Protected Routes (Admin Restriction)</h3>
+          <h3 class="test-name">Verify Sidebar Navigation - Text to Speech page load</h3>
           <div class="test-details">
-            <p><strong>Preconditions:</strong> User is logged in as a normal user ("user@mock.com").</p>
-            <p><strong>Expected:</strong> Role-based routing blocks regular user from accessing /admin and redirects them back to /dashboard.</p>
+            <p><strong>Preconditions:</strong> User is logged in.</p>
+            <p><strong>Expected:</strong> Text to Speech Playground page loads successfully.</p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Checking that Admin Panel link is NOT visible in sidebar for standard user</li><li>Attempting direct route access to /admin</li><li>Waiting for redirection to /dashboard</li></ol>
+              <ol></ol>
             </div>
             
           </div>
@@ -544,14 +964,350 @@
             <span class="badge badge-pass">PASS</span>
             
           </div>
-          <h3 class="test-name">Verify Admin Access to Protected Admin Panel</h3>
+          <h3 class="test-name">Verify Sidebar Navigation - Live Translate page load</h3>
           <div class="test-details">
-            <p><strong>Preconditions:</strong> User is logged out.</p>
-            <p><strong>Expected:</strong> Admin panel is fully unlocked for users with ADMIN roles, displaying analytic grids.</p>
+            <p><strong>Preconditions:</strong> User is logged in.</p>
+            <p><strong>Expected:</strong> Live Translation Workspace loads.</p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Navigating to login page</li><li>Clearing session for admin transition</li><li>Logging in as admin mock user</li><li>Checking Admin link presence in sidebar</li><li>Clicking Admin Panel link</li></ol>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-NAV-05">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">NAV-05</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Verify Sidebar Navigation - Learning Hub page load</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is logged in.</p>
+            <p><strong>Expected:</strong> Vocabulary Learning Hub page loads.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-NAV-06">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">NAV-06</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Verify Sidebar Navigation - Emergency SOS page load</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is logged in.</p>
+            <p><strong>Expected:</strong> SOS Emergency Control page loads.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-NAV-07">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">NAV-07</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Verify Sidebar Navigation - Prediction History page load</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is logged in.</p>
+            <p><strong>Expected:</strong> Prediction Log Archives page loads.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-NAV-08">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">NAV-08</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Verify Sidebar Navigation - Preferences Settings page load</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is logged in.</p>
+            <p><strong>Expected:</strong> System Preferences Settings page loads.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-NAV-09">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">NAV-09</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Verify Browser Navigation - Dashboard to settings and back</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on settings page.</p>
+            <p><strong>Expected:</strong> Browser back navigation triggers React Router history update successfully.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-NAV-10">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">NAV-10</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Verify Browser Navigation - Settings page forward restore</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User navigated back to dashboard.</p>
+            <p><strong>Expected:</strong> Browser forward navigation restores Settings page layout.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-NAV-11">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">NAV-11</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Verify Protected Route - Sign Detection page logout redirect</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User logs out.</p>
+            <p><strong>Expected:</strong> Guard intercepts unauthenticated user.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-NAV-12">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">NAV-12</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Verify Protected Route - Text to Speech logout redirect</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is logged out.</p>
+            <p><strong>Expected:</strong> Guard intercepts user and redirects to login.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-NAV-13">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">NAV-13</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Verify Protected Route - Live Translate logout redirect</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is logged out.</p>
+            <p><strong>Expected:</strong> Guard redirect triggered.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-NAV-14">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">NAV-14</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Verify Protected Route - Learning Hub logout redirect</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is logged out.</p>
+            <p><strong>Expected:</strong> Guard redirect triggered.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-NAV-15">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">NAV-15</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Verify Protected Route - History Log logout redirect</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is logged out.</p>
+            <p><strong>Expected:</strong> Guard redirect triggered.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-RBAC-01">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">RBAC-01</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Standard User Sidebar View (Admin Panel hidden)</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Log in as normal user.</p>
+            <p><strong>Expected:</strong> Admin panel sidebar link is hidden from standard users.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-RBAC-02">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">RBAC-02</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Standard User Route Restriction (Admin URL direct access blocked)</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is logged in as standard user.</p>
+            <p><strong>Expected:</strong> Unauthorized standard user is redirected away from admin panel back to dashboard.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-RBAC-03">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">RBAC-03</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Admin User login and welcome text</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Log in as admin user.</p>
+            <p><strong>Expected:</strong> Admin logs in successfully and page banner matches admin identifier.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-RBAC-04">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">RBAC-04</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Admin User Sidebar View (Admin Panel visible)</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Admin user is logged in.</p>
+            <p><strong>Expected:</strong> Admin panel sidebar navigation link is loaded and visible to administrators.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-RBAC-05">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">RBAC-05</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Admin User direct route access allowed to /admin</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Admin user is logged in.</p>
+            <p><strong>Expected:</strong> Admin panel dashboard loads successfully at /admin containing control widgets.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
             </div>
             
           </div>
@@ -565,14 +1321,14 @@
             <span class="badge badge-pass">PASS</span>
             
           </div>
-          <h3 class="test-name">Emergency Contact - Required Field Validation</h3>
+          <h3 class="test-name">Emergency Contact - Relationship empty check</h3>
           <div class="test-details">
-            <p><strong>Preconditions:</strong> Admin user is logged in and navigates to SOS Control page.</p>
-            <p><strong>Expected:</strong> An alert validation warning displays stating "Name, Relationship, and Phone Number are required fields."</p>
+            <p><strong>Preconditions:</strong> Admin is on SOS Control page and opens Add Contact.</p>
+            <p><strong>Expected:</strong> A warning is displayed about required relationship.</p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Navigating to Emergency page</li><li>Opening Emergency Contacts tab</li><li>Opening Add Contact modal</li><li>Saving contact with filled Name/Phone but empty Relationship</li><li>Verifying validation error text</li></ol>
+              <ol><li>Cleaning up existing contacts. Found 2 contacts.</li></ol>
             </div>
             
           </div>
@@ -586,14 +1342,14 @@
             <span class="badge badge-pass">PASS</span>
             
           </div>
-          <h3 class="test-name">Emergency Contact - Invalid Phone Pattern & Formatting</h3>
+          <h3 class="test-name">Emergency Contact - Name empty check</h3>
           <div class="test-details">
-            <p><strong>Preconditions:</strong> Contact form dialog is open.</p>
-            <p><strong>Expected:</strong> An alert message displays requesting the country code structure starting with + (e.g. +91).</p>
+            <p><strong>Preconditions:</strong> Contact dialog is open.</p>
+            <p><strong>Expected:</strong> Validation blocks submit due to empty name.</p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Filling contact form with invalid phone format (missing +)</li><li>Verifying phone validation error warning</li></ol>
+              <ol></ol>
             </div>
             
           </div>
@@ -607,14 +1363,14 @@
             <span class="badge badge-pass">PASS</span>
             
           </div>
-          <h3 class="test-name">Emergency Contact - Limit of 5 Boundary Testing</h3>
+          <h3 class="test-name">Emergency Contact - Phone empty check</h3>
           <div class="test-details">
-            <p><strong>Preconditions:</strong> Emergency Contact tab is open.</p>
-            <p><strong>Expected:</strong> Contact list limits users to maximum 5 items to prevent duplicate notification payloads.</p>
+            <p><strong>Preconditions:</strong> Contact dialog is open.</p>
+            <p><strong>Expected:</strong> Validation blocks submit due to empty phone.</p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Dismissing current invalid contact form</li><li>Checking current contact numbers</li><li>Current contact count: 2</li><li>Seeding contact #3</li><li>Seeding contact #4</li><li>Seeding contact #5</li><li>Verifying Add Contact button is disabled or throws validation error when adding #6</li><li>Add Contact button successfully disabled at boundary threshold.</li></ol>
+              <ol></ol>
             </div>
             
           </div>
@@ -628,16 +1384,154 @@
             <span class="badge badge-pass">PASS</span>
             
           </div>
-          <h3 class="test-name">Emergency Contact - Duplicate Submission Prevention</h3>
+          <h3 class="test-name">Emergency Contact - Invalid Phone format validation (No + prefix)</h3>
           <div class="test-details">
-            <p><strong>Preconditions:</strong> Emergency Contacts Circle tab is active.</p>
-            <p><strong>Expected:</strong> System flags duplicate phone numbers to prevent duplicate notification pipelines.</p>
+            <p><strong>Preconditions:</strong> Contact dialog is open.</p>
+            <p><strong>Expected:</strong> System warning displays detailing that country code prefix + is missing.</p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Deleting first contact to free up slot</li><li>Adding duplicate phone number contact</li><li>Verifying duplicate warning details</li></ol>
+              <ol></ol>
             </div>
             
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FORM-05">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FORM-05</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Emergency Contact - Invalid Phone format validation (Too short)</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Contact dialog is open.</p>
+            <p><strong>Expected:</strong> Warning displays about short phone length constraints.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FORM-06">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FORM-06</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Emergency Contact - Invalid Phone format validation (Letters in phone)</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Contact dialog is open.</p>
+            <p><strong>Expected:</strong> Warning highlights that phone number must contain numbers only.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FORM-07">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FORM-07</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Emergency Contact - Limit of 5 Boundary Testing</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Contact list is displayed.</p>
+            <p><strong>Expected:</strong> Contact list max capacity limits users to 5 entries.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol><li>Boundary limit verified. Add Button disabled.</li></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FORM-08">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FORM-08</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Emergency Contact - Duplicate Submission Prevention</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Standard contact list.</p>
+            <p><strong>Expected:</strong> System warning flags duplicate numbers.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FORM-09">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FORM-09</span>
+            <span class="badge badge-fail">FAIL</span>
+            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+          </div>
+          <h3 class="test-name">Emergency Contact - Deletion modal confirmation cancel check</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Contacts tab is open.</p>
+            <p><strong>Expected:</strong> Cancel delete retains existing contact.</p>
+            <p><strong>Actual:</strong> <span class="text-fail">element not interactable
+  (Session info: chrome=149.0.7827.53)</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+        <div class="screenshot-container">
+          <p><strong>Failure Screenshot:</strong></p>
+          <img class="screenshot-img" src="screenshots/FORM-09-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FORM-09-failed.png')" />
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FORM-10">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FORM-10</span>
+            <span class="badge badge-fail">FAIL</span>
+            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+          </div>
+          <h3 class="test-name">Emergency Contact - Delete and verify list count decrement</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Contacts list is open.</p>
+            <p><strong>Expected:</strong> Contact is successfully deleted and count is updated.</p>
+            <p><strong>Actual:</strong> <span class="text-fail">element not interactable
+  (Session info: chrome=149.0.7827.53)</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+        <div class="screenshot-container">
+          <p><strong>Failure Screenshot:</strong></p>
+          <img class="screenshot-img" src="screenshots/FORM-10-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FORM-10-failed.png')" />
+        </div>
+      
           </div>
         </td>
       </tr>
@@ -649,14 +1543,14 @@
             <span class="badge badge-pass">PASS</span>
             
           </div>
-          <h3 class="test-name">Dashboard Loading & Metric Verification</h3>
+          <h3 class="test-name">Dashboard Welcome header rendering</h3>
           <div class="test-details">
-            <p><strong>Preconditions:</strong> Admin is logged in on Dashboard.</p>
-            <p><strong>Expected:</strong> Dashboard renders metric stats cards (gestures, vocabulary, active emergency logs) with layout alignments.</p>
+            <p><strong>Preconditions:</strong> Admin user is logged in.</p>
+            <p><strong>Expected:</strong> Welcome title displays for logged in user.</p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Navigating back to control panel dashboard</li><li>Checking welcome admin title</li><li>Verifying presence of metric cards</li></ol>
+              <ol></ol>
             </div>
             
           </div>
@@ -670,14 +1564,14 @@
             <span class="badge badge-pass">PASS</span>
             
           </div>
-          <h3 class="test-name">History Log - Search & Filter Verification</h3>
+          <h3 class="test-name">Metric Cards - Gestures recognized widget load</h3>
           <div class="test-details">
-            <p><strong>Preconditions:</strong> User is on the History Log archive page.</p>
-            <p><strong>Expected:</strong> Search input triggers matching keyword filter logs and trims down non-matching items.</p>
+            <p><strong>Preconditions:</strong> User is on control panel dashboard.</p>
+            <p><strong>Expected:</strong> Dashboard renders gestures recognized metric counter.</p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Navigating to History log page</li><li>Checking total logs count</li><li>Initial logs count: 3</li><li>Entering search term "thank_you"</li><li>Checking filtered logs count matches expectation</li><li>Filtered logs count: 1</li><li>Clearing search filter</li></ol>
+              <ol></ol>
             </div>
             
           </div>
@@ -691,14 +1585,371 @@
             <span class="badge badge-pass">PASS</span>
             
           </div>
-          <h3 class="test-name">Appearance Theme Toggle & Layout Responsiveness</h3>
+          <h3 class="test-name">Metric Cards - Emergency alerts widget load</h3>
           <div class="test-details">
-            <p><strong>Preconditions:</strong> User is logged in on settings page.</p>
-            <p><strong>Expected:</strong> Toggling theme switches class tokens dynamically and updates local storage `app_theme` state.</p>
+            <p><strong>Preconditions:</strong> User is on dashboard.</p>
+            <p><strong>Expected:</strong> Dashboard renders active SOS warnings counter.</p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Navigating to Settings page</li><li>Reading HTML dataset app theme attribute</li><li>Initial theme dataset attribute: dark</li><li>Toggling theme switch to swap themes</li><li>Verifying theme attribute is updated</li><li>New theme dataset attribute: light</li><li>Checking localStorage persistence of new theme</li><li>Restoring dark theme layout</li></ol>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-UI-04">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">UI-04</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Metric Cards - Vocabulary learned widget load</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on dashboard.</p>
+            <p><strong>Expected:</strong> Dashboard renders total vocabulary cards checked counter.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-UI-05">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">UI-05</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">History Log - table structure</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on prediction history page.</p>
+            <p><strong>Expected:</strong> Logs table headers are properly rendered.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol><li>Seeding mock history log entry to prevent query empty-state timeouts</li><li>Refreshing History page to pull new record</li></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-UI-06">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">UI-06</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">History Log - search filtering</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on prediction history page.</p>
+            <p><strong>Expected:</strong> Logs are dynamically filtered.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-UI-07">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">UI-07</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">History Log - search clearing</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Search query is active.</p>
+            <p><strong>Expected:</strong> Original row items restore after search clearing.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-UI-08">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">UI-08</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">History Log - Search query with zero matches displays empty state</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User on history logs.</p>
+            <p><strong>Expected:</strong> History logs table displays zero rows or fallback warning text.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-UI-09">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">UI-09</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Settings Page - Theme switch appearance toggle (light mode)</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on settings page.</p>
+            <p><strong>Expected:</strong> Dynamic class light mode is applied to DOM element html.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-UI-10">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">UI-10</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Settings Page - Theme switch appearance toggle (dark mode restore)</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Theme light mode is active.</p>
+            <p><strong>Expected:</strong> Theme dark mode restores.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FEAT-01">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FEAT-01</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Sign Detection - Camera View Placeholder Render</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on Sign Detection page.</p>
+            <p><strong>Expected:</strong> AI sign workspace displays video placeholder element.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol><li>Using mock fallback camera container representation.</li></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FEAT-02">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FEAT-02</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Sign Detection - Gestures select dropdown check</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Sign Detection is open.</p>
+            <p><strong>Expected:</strong> Voice and translation controls are visible on sign detection page.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FEAT-03">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FEAT-03</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Sign Detection - Start detection button status change</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on Sign Detection.</p>
+            <p><strong>Expected:</strong> Status bar swaps to recording state visual labels.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FEAT-04">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FEAT-04</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Sign Detection - Stop detection button state recovery</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Recording is active.</p>
+            <p><strong>Expected:</strong> Status indicator switches back to idle.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FEAT-05">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FEAT-05</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Text-to-Speech - Textarea input character count validation</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on Text-to-Speech page.</p>
+            <p><strong>Expected:</strong> Textarea is rendered and accepts custom input.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FEAT-06">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FEAT-06</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Text-to-Speech - Play speed slider default value verification</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User on Text to Speech page.</p>
+            <p><strong>Expected:</strong> Default speed slider displays 1.0x text label.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FEAT-07">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FEAT-07</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Text-to-Speech - Clear text button clears textarea</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Textarea contains sample values.</p>
+            <p><strong>Expected:</strong> TextArea fields values are correctly reset.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FEAT-08">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FEAT-08</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Live Translate - Language swap button functionality</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on Live Translate page.</p>
+            <p><strong>Expected:</strong> Languages selections swap roles.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FEAT-09">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FEAT-09</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Learning Hub - category toggle buttons check</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User is on Learning page.</p>
+            <p><strong>Expected:</strong> Selected category filter button updates styling.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-FEAT-10">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">FEAT-10</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Learning Hub - card check</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Alphabet filter is active.</p>
+            <p><strong>Expected:</strong> Card progress indicates 100% completion.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
             </div>
             
           </div>
@@ -712,14 +1963,14 @@
             <span class="badge badge-pass">PASS</span>
             
           </div>
-          <h3 class="test-name">Sensitive Storage Session Validation</h3>
+          <h3 class="test-name">Sensitive cache - tokenized credentials validation</h3>
           <div class="test-details">
-            <p><strong>Preconditions:</strong> Admin user is logged in.</p>
-            <p><strong>Expected:</strong> Local storage uses tokenized session headers instead of clear text passwords.</p>
+            <p><strong>Preconditions:</strong> User is logged in.</p>
+            <p><strong>Expected:</strong> Storage uses tokens, ensuring passwords details are never cached in cleartext.</p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Retrieving session storage contents</li><li>Verifying details do not contain clear text passwords</li><li>Session storage validated. Contains tokenized header: mock-admin-token</li></ol>
+              <ol></ol>
             </div>
             
           </div>
@@ -733,14 +1984,77 @@
             <span class="badge badge-pass">PASS</span>
             
           </div>
-          <h3 class="test-name">Browser Console Logs Exposure Check</h3>
+          <h3 class="test-name">Browser console log scanner - no secrets exposed</h3>
           <div class="test-details">
-            <p><strong>Preconditions:</strong> User is executing various workflows on the site.</p>
-            <p><strong>Expected:</strong> No sensitive client credentials or database connection details are exposed via console logs.</p>
+            <p><strong>Preconditions:</strong> Logs are active.</p>
+            <p><strong>Expected:</strong> Browser console is clean and does not leak API keys or user passwords.</p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Fetching browser log buffers</li><li>Analyzing 55 browser console lines...</li><li>Console logs review completed. No credentials leaks identified.</li></ol>
+              <ol></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-SEC-03">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">SEC-03</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Local storage theme persistence</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> Theme preference has been updated.</p>
+            <p><strong>Expected:</strong> Theme variable state persists across views in browser local storage key.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol><li>Active stored theme choice: dark</li></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-SEC-04">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">SEC-04</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Settings page auto-play configuration state check</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User settings are cached.</p>
+            <p><strong>Expected:</strong> Custom settings options are stored cleanly.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol><li>Autoplay status preference: null</li></ol>
+            </div>
+            
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="test-row" id="test-SEC-05">
+        <td>
+          <div class="test-meta">
+            <span class="test-id">SEC-05</span>
+            <span class="badge badge-pass">PASS</span>
+            
+          </div>
+          <h3 class="test-name">Cookie/Storage cleanup state on logout check</h3>
+          <div class="test-details">
+            <p><strong>Preconditions:</strong> User triggers logout.</p>
+            <p><strong>Expected:</strong> Client local cache resets on session exit.</p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
+            <div class="steps-box">
+              <strong>Steps Executed:</strong>
+              <ol></ol>
             </div>
             
           </div>
