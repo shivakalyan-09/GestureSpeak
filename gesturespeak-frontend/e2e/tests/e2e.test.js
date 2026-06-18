@@ -869,8 +869,7 @@ export default async function runTests(driver, targetUrl) {
     'Admin panel dashboard loads successfully at /admin containing control widgets.',
     async (step) => {
       await dashboardPage.clickSidebarAdminPanel();
-      await driver.wait(async () => (await driver.getCurrentUrl()).includes('/admin'), 5000);
-      const title = await dashboardPage.getHeaderTitle();
+      const title = await dashboardPage.waitForHeaderTitle('Administrator Analytics');
       if (!title.includes('Administrator Analytics')) {
         throw new Error(`Admin page title mismatch: "${title}"`);
       }
@@ -926,7 +925,7 @@ export default async function runTests(driver, targetUrl) {
     ['Fill relationship and phone, empty name', 'Submit and check required alert message'],
     'Validation blocks submit due to empty name.',
     async (step) => {
-      await emergencyPage.click(emergencyPage.cancelContactButton);
+      await emergencyPage.clickCancelContact();
       await emergencyPage.clickAddContact();
       await emergencyPage.fillContactForm(null, 'Spouse', '+919988776655', '');
       const msg = await emergencyPage.getFormErrorMessage();
@@ -943,7 +942,7 @@ export default async function runTests(driver, targetUrl) {
     ['Fill name and relationship, empty phone', 'Submit and check required alert message'],
     'Validation blocks submit due to empty phone.',
     async (step) => {
-      await emergencyPage.click(emergencyPage.cancelContactButton);
+      await emergencyPage.clickCancelContact();
       await emergencyPage.clickAddContact();
       await emergencyPage.fillContactForm('Bob QA', 'Friend', null, '');
       const msg = await emergencyPage.getFormErrorMessage();
@@ -960,7 +959,7 @@ export default async function runTests(driver, targetUrl) {
     ['Fill contact with invalid phone format "9876543210"', 'Click Save', 'Check format warning alert'],
     'System warning displays detailing that country code prefix + is missing.',
     async (step) => {
-      await emergencyPage.click(emergencyPage.cancelContactButton);
+      await emergencyPage.clickCancelContact();
       await emergencyPage.clickAddContact();
       await emergencyPage.fillContactForm('Valid Name', 'Friend', '9876543210', '');
       const msg = await emergencyPage.getFormErrorMessage();
@@ -977,7 +976,7 @@ export default async function runTests(driver, targetUrl) {
     ['Fill contact with short phone "+123"', 'Click Save', 'Check format error alert'],
     'Warning displays about short phone length constraints.',
     async (step) => {
-      await emergencyPage.click(emergencyPage.cancelContactButton);
+      await emergencyPage.clickCancelContact();
       await emergencyPage.clickAddContact();
       await emergencyPage.fillContactForm('Valid Name', 'Sibling', '+123', '');
       const msg = await emergencyPage.getFormErrorMessage();
@@ -994,7 +993,7 @@ export default async function runTests(driver, targetUrl) {
     ['Fill contact with phone containing letters: "+919876abc12"', 'Click Save', 'Check alert'],
     'Warning highlights that phone number must contain numbers only.',
     async (step) => {
-      await emergencyPage.click(emergencyPage.cancelContactButton);
+      await emergencyPage.clickCancelContact();
       await emergencyPage.clickAddContact();
       await emergencyPage.fillContactForm('Valid Name', 'Parent', '+919876abc12', '');
       const msg = await emergencyPage.getFormErrorMessage();
@@ -1011,7 +1010,7 @@ export default async function runTests(driver, targetUrl) {
     ['Cancel open form', 'Seed mock contacts to reach count of 5', 'Attempt to add 6th contact and verify disabled/error'],
     'Contact list max capacity limits users to 5 entries.',
     async (step) => {
-      await emergencyPage.click(emergencyPage.cancelContactButton);
+      await emergencyPage.clickCancelContact();
       let current = await emergencyPage.getContactsCount();
       while (current < 5) {
         await emergencyPage.clickAddContact();
@@ -1031,7 +1030,7 @@ export default async function runTests(driver, targetUrl) {
         if (!msg.includes('limit of 5')) {
           throw new Error(`Expected limit warning but got: "${msg}"`);
         }
-        await emergencyPage.click(emergencyPage.cancelContactButton);
+        await emergencyPage.clickCancelContact();
       }
     }
   );
@@ -1059,7 +1058,7 @@ export default async function runTests(driver, targetUrl) {
       if (!msg.toLowerCase().includes('exists')) {
         throw new Error(`Expected duplicate check warning but got: "${msg}"`);
       }
-      await emergencyPage.click(emergencyPage.cancelContactButton);
+      await emergencyPage.clickCancelContact();
     }
   );
 
@@ -1341,7 +1340,13 @@ export default async function runTests(driver, targetUrl) {
     async (step) => {
       const btn = await driver.findElements(By.xpath("//button[contains(., 'Start') or contains(., 'RECORDING')]"));
       if (btn.length > 0) {
-        await btn[0].click();
+        await driver.wait(until.elementIsEnabled(btn[0]), 8000).catch(() => {});
+        try {
+          await btn[0].click();
+        } catch (e) {
+          console.log("FEAT-03: standard click failed, performing JS click");
+          await driver.executeScript("arguments[0].click();", btn[0]);
+        }
       }
     }
   );

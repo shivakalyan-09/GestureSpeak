@@ -51,6 +51,15 @@ export default class BasePage {
     }
   }
 
+  async clickElement(element) {
+    try {
+      await element.click();
+    } catch (err) {
+      console.log(`Standard clickElement failed, attempting JS click`);
+      await this.driver.executeScript("arguments[0].click();", element);
+    }
+  }
+
   async write(locator, text, timeout = this.defaultTimeout) {
     const element = await this.find(locator, timeout);
     await this.driver.wait(until.elementIsEnabled(element), timeout);

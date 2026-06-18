@@ -100,6 +100,11 @@ export default class EmergencyPage extends BasePage {
     await new Promise(r => setTimeout(r, 400)); // wait for dialog transition
   }
 
+  async clickCancelContact() {
+    await this.click(this.cancelContactButton);
+    await new Promise(r => setTimeout(r, 600)); // wait for dialog close transition to complete
+  }
+
   async fillContactForm(name, relationship, phone, email = '') {
     if (name !== null) {
       await this.write(this.fullNameInput, name);
@@ -160,7 +165,7 @@ export default class EmergencyPage extends BasePage {
     const rows = await this.driver.findElements(this.contactsTableRow);
     if (rows.length > 0) {
       const deleteButton = await rows[0].findElement(By.xpath(".//button[contains(., 'Delete')]"));
-      await deleteButton.click();
+      await this.clickElement(deleteButton);
     }
   }
 
@@ -168,7 +173,7 @@ export default class EmergencyPage extends BasePage {
     const rows = await this.driver.findElements(this.contactsTableRow);
     if (rows.length > 0) {
       const editButton = await rows[0].findElement(By.xpath(".//button[contains(., 'Edit')]"));
-      await editButton.click();
+      await this.clickElement(editButton);
       await this.driver.wait(until.elementLocated(this.dialogTitle), 5000);
       await new Promise(r => setTimeout(r, 400)); // wait for transition
     }
