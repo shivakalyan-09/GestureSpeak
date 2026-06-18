@@ -897,7 +897,12 @@ export default async function runTests(driver, targetUrl) {
       step(`Cleaning up existing contacts. Found ${count} contacts.`);
       for (let i = 0; i < count; i++) {
         await emergencyPage.clickDeleteFirstContact();
-        await driver.switchTo().alert().accept().catch(() => {});
+        try {
+          await driver.wait(until.alertIsPresent(), 5000);
+          await (await driver.switchTo().alert()).accept();
+        } catch (e) {
+          console.warn("Cleanup alert handling failed:", e.message);
+        }
         await new Promise(r => setTimeout(r, 500));
       }
       
@@ -1038,9 +1043,15 @@ export default async function runTests(driver, targetUrl) {
     ['Remove one contact', 'Add a duplicate contact matching phone number "+919988770000"', 'Verify duplicate alert warning details'],
     'System warning flags duplicate numbers.',
     async (step) => {
+      const startCount = await emergencyPage.getContactsCount();
       await emergencyPage.clickDeleteFirstContact();
-      await driver.switchTo().alert().accept().catch(() => {});
-      await new Promise(r => setTimeout(r, 400));
+      await driver.wait(until.alertIsPresent(), 5000);
+      await (await driver.switchTo().alert()).accept();
+      // Wait for count to decrement in DOM
+      await driver.wait(async () => {
+        const currentCount = await emergencyPage.getContactsCount();
+        return currentCount === startCount - 1;
+      }, 5000);
       
       await emergencyPage.clickAddContact();
       await emergencyPage.fillContactForm('Dup QA', 'Other', '+919988770001', '');
@@ -1061,8 +1072,9 @@ export default async function runTests(driver, targetUrl) {
     async (step) => {
       const startCount = await emergencyPage.getContactsCount();
       await emergencyPage.clickDeleteFirstContact();
-      await driver.switchTo().alert().dismiss().catch(() => {});
-      await new Promise(r => setTimeout(r, 400));
+      await driver.wait(until.alertIsPresent(), 5000);
+      await (await driver.switchTo().alert()).dismiss();
+      await new Promise(r => setTimeout(r, 500));
       const endCount = await emergencyPage.getContactsCount();
       if (startCount !== endCount) {
         throw new Error(`Contact deleted when cancel was pressed. Count changed from ${startCount} to ${endCount}`);
@@ -1079,8 +1091,13 @@ export default async function runTests(driver, targetUrl) {
     async (step) => {
       const startCount = await emergencyPage.getContactsCount();
       await emergencyPage.clickDeleteFirstContact();
-      await driver.switchTo().alert().accept().catch(() => {});
-      await new Promise(r => setTimeout(r, 400));
+      await driver.wait(until.alertIsPresent(), 5000);
+      await (await driver.switchTo().alert()).accept();
+      // Wait for count to decrement in DOM
+      await driver.wait(async () => {
+        const currentCount = await emergencyPage.getContactsCount();
+        return currentCount === startCount - 1;
+      }, 5000);
       const endCount = await emergencyPage.getContactsCount();
       if (endCount !== startCount - 1) {
         throw new Error(`Expected count ${startCount - 1} but got ${endCount}`);

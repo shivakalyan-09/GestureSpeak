@@ -51,44 +51,62 @@ export default class DashboardPage extends BasePage {
     await this.click(this.signLearningCard);
   }
 
+  async clickSidebarItem(locator, targetSegment) {
+    await new Promise(r => setTimeout(r, 450));
+    await this.click(locator);
+    try {
+      await this.driver.wait(async () => {
+        const url = await this.driver.getCurrentUrl();
+        return url.includes(targetSegment);
+      }, 3000);
+    } catch (e) {
+      console.log(`[Self-Healing] Click on sidebar item ${JSON.stringify(locator)} failed to navigate to ${targetSegment}. Retrying click...`);
+      await this.click(locator);
+      await this.driver.wait(async () => {
+        const url = await this.driver.getCurrentUrl();
+        return url.includes(targetSegment);
+      }, 5000);
+    }
+  }
+
   async clickSidebarDashboard() {
-    await this.click(this.sidebarDashboard);
+    await this.clickSidebarItem(this.sidebarDashboard, '/dashboard');
   }
 
   async clickSidebarSignToText() {
-    await this.click(this.sidebarSignToText);
+    await this.clickSidebarItem(this.sidebarSignToText, '/sign-detection');
   }
 
   async clickSidebarTextToSpeech() {
-    await this.click(this.sidebarTextToSpeech);
+    await this.clickSidebarItem(this.sidebarTextToSpeech, '/text-to-speech');
   }
 
   async clickSidebarLiveTranslate() {
-    await this.click(this.sidebarLiveTranslate);
+    await this.clickSidebarItem(this.sidebarLiveTranslate, '/live-translate');
   }
 
   async clickSidebarLearning() {
-    await this.click(this.sidebarLearning);
+    await this.clickSidebarItem(this.sidebarLearning, '/learning');
   }
 
   async clickSidebarEmergencySOS() {
-    await this.click(this.sidebarEmergencySOS);
+    await this.clickSidebarItem(this.sidebarEmergencySOS, '/emergency');
   }
 
   async clickSidebarHistoryLog() {
-    await this.click(this.sidebarHistoryLog);
+    await this.clickSidebarItem(this.sidebarHistoryLog, '/history');
   }
 
   async clickSidebarSettings() {
-    await this.click(this.sidebarSettings);
+    await this.clickSidebarItem(this.sidebarSettings, '/settings');
   }
 
   async clickSidebarAdminPanel() {
-    await this.click(this.sidebarAdminPanel);
+    await this.clickSidebarItem(this.sidebarAdminPanel, '/admin');
   }
 
   async clickLogout() {
-    await this.click(this.sidebarLogout);
+    await this.clickSidebarItem(this.sidebarLogout, '/login');
   }
 
   async clickThemeToggle() {
