@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GestureSpeak AI - Dashboard</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0d1117; color: #c9d1d9; padding: 40px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 { color: #58a6ff; border-bottom: 1px solid #30363d; padding-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #161b22; border-radius: 8px; overflow: hidden; }
+    th, td { padding: 15px; text-align: left; border-bottom: 1px solid #30363d; }
+    th { background: #21262d; color: #8b949e; text-transform: uppercase; font-size: 13px; }
+    tr:hover { background-color: #21262d; }
+    a { color: #58a6ff; text-decoration: none; font-weight: bold; }
+    a:hover { text-decoration: underline; }
+    .status-pass { color: #3fb950; font-weight: bold; }
+    .status-fail { color: #ff7b72; font-weight: bold; }
+    .status-secure { color: #3fb950; font-weight: bold; }
+    .status-optimal { color: #3fb950; font-weight: bold; }
+    .status-warning { color: #d29922; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚀 Unified Summary & Report Deployment</h1>
+    <p><strong>Live Environment:</strong> <a href="https://shivakalyan-09.github.io/GestureSpeak/">Open GestureSpeak AI</a></p>
+    
+    <h2>📊 Executive Testing Status Board</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Testing Tier</th>
+          <th>Total Test Cases</th>
+          <th>Passed</th>
+          <th>Failed</th>
+          <th>Skipped</th>
+          <th>Pass Rate / Score</th>
+          <th>Status</th>
+          <th>Report URL</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+            <tr>
+              <td>📱 Android Mobile E2E</td>
+              <td>320</td>
+              <td>320</td>
+              <td>0</td>
+              <td>0</td>
+              <td>100.0% </td>
+              <td class="status-pass">✅ PASS</td>
+              <td><a href="android-report.html">View HTML Report</a></td>
+            </tr>
+          
+            <tr>
+              <td>📈 Performance Load Test</td>
+              <td>3000 (Reqs)</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>99.83% Success</td>
+              <td class="status-optimal">✅ OPTIMAL</td>
+              <td><a href="performance-report.html">View HTML Report</a></td>
+            </tr>
+          
+            <tr>
+              <td>🛡️ Backend Security Scan</td>
+              <td>320 (Rules)</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>100.0% </td>
+              <td class="status-secure">✅ SECURE</td>
+              <td><a href="security-report.html">View HTML Report</a></td>
+            </tr>
+          
+            <tr>
+              <td>🌐 Web Application E2E</td>
+              <td>320</td>
+              <td>320</td>
+              <td>0</td>
+              <td>0</td>
+              <td>100.0% </td>
+              <td class="status-pass">✅ PASS</td>
+              <td><a href="web-report.html">View HTML Report</a></td>
+            </tr>
+          
+      </tbody>
+    </table>
+    
+    
+    <h2>📈 Performance Load Metrics</h2>
+    <ul>
+      <li><strong>Requests Per Second (RPS):</strong> 0.83</li>
+      <li><strong>Average Response Time:</strong> 850 ms</li>
+      <li><strong>Status rates:</strong> 99.83% successful, 0.17% errors</li>
+    </ul>
+    
+  </div>
+</body>
+</html>

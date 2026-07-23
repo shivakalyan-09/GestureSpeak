@@ -1,0 +1,13 @@
+{
+  "name": "gesturespeak-report-generator",
+  "version": "1.0.0",
+  "description": "Script to parse Excel reports and generate HTML test summaries",
+  "main": "dashboardGenerator.js",
+  "type": "module",
+  "scripts": {
+    "start": "node dashboardGenerator.js"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0"
+  }
+}

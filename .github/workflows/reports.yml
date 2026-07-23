@@ -1,0 +1,50 @@
+name: Excel to HTML Report Generation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-reports:
+    name: Parse Excel and Generate HTML Reports
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        working-directory: ./scripts
+        run: npm install
+
+      - name: Execute Excel Parser and HTML Generators
+        working-directory: ./scripts
+        run: npm start
+
+      - name: Upload HTML Reports Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-reports
+          path: reports/html/
+
+      - name: Upload Original Excel Reports Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: excel-reports
+          path: reports/excel/
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: reports/html
+          branch: gh-pages
+          clean: true
