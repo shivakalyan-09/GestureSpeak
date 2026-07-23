@@ -318,19 +318,19 @@
       </div>
       <div class="card">
         <div class="card-title">Pass Rate</div>
-        <div class="card-value color-success">17.3%</div>
+        <div class="card-value color-success">100.0%</div>
       </div>
       <div class="card">
         <div class="card-title">Passed / Total</div>
-        <div class="card-value color-success">14 / 81</div>
+        <div class="card-value color-success">81 / 81</div>
       </div>
       <div class="card">
         <div class="card-title">Failed</div>
-        <div class="card-value color-error">67</div>
+        <div class="card-value color-error">0</div>
       </div>
       <div class="card">
         <div class="card-title">Duration</div>
-        <div class="card-value color-warning">628.6s</div>
+        <div class="card-value color-warning">168.1s</div>
       </div>
     </div>
     
@@ -394,24 +394,19 @@
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-03</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Logout Functionality</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is logged in and on the dashboard.</p>
             <p><strong>Expected:</strong> Session is cleared from client-side storage, and user is redirected back to login page.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Wait timed out after 5183ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Clicking Logout in the sidebar drawer</li></ol>
+              <ol><li>Clicking Logout in the sidebar drawer</li><li>Waiting for redirection to /login</li><li>Verifying mock session is cleared from localStorage</li></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-03-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-03-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -420,24 +415,19 @@
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-04</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Unauthorized Access after Logout</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is logged out.</p>
             <p><strong>Expected:</strong> Route protection blocks direct access and redirects unauthenticated user back to /login.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Wait timed out after 5188ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol><li>Attempting direct navigation to /dashboard</li><li>Waiting for redirect to /login</li></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-04-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-04-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -446,25 +436,19 @@
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-05</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Login Input Fields Empty Validations</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on the login page.</p>
             <p><strong>Expected:</strong> HTML5 required field constraints prevent form submission.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"button.premium-btn, button[type=\"submit\"]"}. Details: Waiting for element to be located By(css selector, button.premium-btn, button[type="submit"])
-Wait timed out after 10190ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Navigating to login URL</li><li>Submitting empty login form</li></ol>
+              <ol><li>Navigating to login URL</li><li>Submitting empty login form</li><li>Verifying email field is marked invalid / empty check</li></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-05-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-05-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -473,25 +457,19 @@ Wait timed out after 10190ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-06</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Login Email Required Validation</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on the login page.</p>
             <p><strong>Expected:</strong> Form submission is blocked because email field is empty and marked required.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"input#password"}. Details: Waiting for element to be located By(css selector, input#password)
-Wait timed out after 10202ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-06-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-06-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -500,25 +478,19 @@ Wait timed out after 10202ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-07</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Login Password Required Validation</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on the login page.</p>
             <p><strong>Expected:</strong> Form submission is blocked because password field is empty and marked required.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"input#email"}. Details: Waiting for element to be located By(css selector, input#email)
-Wait timed out after 10197ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-07-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-07-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -527,25 +499,19 @@ Wait timed out after 10197ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-08</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Invalid Email Format Validation - Missing @ character</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on the login page.</p>
             <p><strong>Expected:</strong> Email validation flags format as invalid.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"input#email"}. Details: Waiting for element to be located By(css selector, input#email)
-Wait timed out after 10198ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-08-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-08-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -554,25 +520,19 @@ Wait timed out after 10198ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-09</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Invalid Email Format Validation - Missing Domain Name</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on the login page.</p>
             <p><strong>Expected:</strong> Email validation blocks submission due to missing domain name.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"input#email"}. Details: Waiting for element to be located By(css selector, input#email)
-Wait timed out after 10175ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-09-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-09-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -581,25 +541,19 @@ Wait timed out after 10175ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-10</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Invalid Email Format Validation - Leading Spaces</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on the login page.</p>
             <p><strong>Expected:</strong> Email validation identifies leading space as invalid format.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"input#email"}. Details: Waiting for element to be located By(css selector, input#email)
-Wait timed out after 10179ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-10-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-10-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -608,25 +562,19 @@ Wait timed out after 10179ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-11</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Invalid Email Format Validation - Special Characters in Domain</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on the login page.</p>
             <p><strong>Expected:</strong> Special characters in domain are blocked.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"input#email"}. Details: Waiting for element to be located By(css selector, input#email)
-Wait timed out after 10180ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-11-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-11-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -635,25 +583,19 @@ Wait timed out after 10180ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-12</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Invalid Email Format Validation - No dot in domain</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on the login page.</p>
             <p><strong>Expected:</strong> Missing dot in domain is flagged by standard email validators.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"input#email"}. Details: Waiting for element to be located By(css selector, input#email)
-Wait timed out after 10185ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-12-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-12-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -662,25 +604,19 @@ Wait timed out after 10185ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-13</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Register View - Navigate to Register Form</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on login page.</p>
             <p><strong>Expected:</strong> User is redirected to the sign up page successfully.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"a[href=\"/register\"]"}. Details: Waiting for element to be located By(css selector, a[href="/register"])
-Wait timed out after 10200ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-13-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-13-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -689,25 +625,19 @@ Wait timed out after 10200ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-14</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Register Form - Empty Name validation</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on register page.</p>
             <p><strong>Expected:</strong> Sign up is blocked and username input is highlighted.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"input#email"}. Details: Waiting for element to be located By(css selector, input#email)
-Wait timed out after 10183ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-14-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-14-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -716,25 +646,19 @@ Wait timed out after 10183ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-15</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Register Form - Empty Email validation</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on register page.</p>
             <p><strong>Expected:</strong> Sign up is blocked and email input is highlighted.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"input#username"}. Details: Waiting for element to be located By(css selector, input#username)
-Wait timed out after 10204ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-15-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-15-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -743,25 +667,19 @@ Wait timed out after 10204ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-16</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Register Form - Empty Password validation</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on register page.</p>
             <p><strong>Expected:</strong> Sign up is blocked due to empty password.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"input#username"}. Details: Waiting for element to be located By(css selector, input#username)
-Wait timed out after 10205ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-16-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-16-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -770,25 +688,19 @@ Wait timed out after 10205ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-17</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Register Form - Empty Confirm Password validation</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on register page.</p>
             <p><strong>Expected:</strong> Sign up is blocked due to empty confirm password.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"input#username"}. Details: Waiting for element to be located By(css selector, input#username)
-Wait timed out after 10016ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-17-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-17-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -797,25 +709,19 @@ Wait timed out after 10016ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-18</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Register Form - Password mismatch validation</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on register page.</p>
             <p><strong>Expected:</strong> System shows alert indicating passwords do not match.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"input#username"}. Details: Waiting for element to be located By(css selector, input#username)
-Wait timed out after 10197ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-18-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-18-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -824,25 +730,19 @@ Wait timed out after 10197ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-19</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Register Form - Short Password boundary check (<6 characters)</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on register page.</p>
             <p><strong>Expected:</strong> Registration fails with a short password warning alert.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"input#username"}. Details: Waiting for element to be located By(css selector, input#username)
-Wait timed out after 10178ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-19-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-19-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -851,25 +751,19 @@ Wait timed out after 10178ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-20</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Register Form - Invalid Email Format</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on register page.</p>
             <p><strong>Expected:</strong> Email input block submits matching type="email".</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"input#email"}. Details: Waiting for element to be located By(css selector, input#email)
-Wait timed out after 10187ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-20-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-20-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -878,25 +772,19 @@ Wait timed out after 10187ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-21</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Register Form - Success Mock Registration Bypass</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on register page.</p>
             <p><strong>Expected:</strong> New account registration mock bypass completes successfully and redirects user to dashboard.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":"input#username"}. Details: Waiting for element to be located By(css selector, input#username)
-Wait timed out after 10185ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-21-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-21-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -905,24 +793,19 @@ Wait timed out after 10185ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-22</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Forgot Password View - Navigate to Reset Request page</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on login page.</p>
             <p><strong>Expected:</strong> User loads the forgot password instructions workspace view.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Wait timed out after 5113ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-22-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-22-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -973,24 +856,19 @@ Wait timed out after 10185ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">AUTH-25</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Forgot Password - Back to Login link check</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on Forgot Password page.</p>
             <p><strong>Expected:</strong> User returns to login view.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Wait timed out after 5106ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/AUTH-25-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/AUTH-25-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -999,24 +877,19 @@ Wait timed out after 10185ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">NAV-PRE</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Navigate Setup: Logging in</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on login page.</p>
             <p><strong>Expected:</strong> Preconditions established.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Wait timed out after 5107ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/NAV-PRE-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/NAV-PRE-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1025,25 +898,19 @@ Wait timed out after 10185ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">NAV-01</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Verify Sidebar Navigation - Dashboard Panel redirect</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is logged in on dashboard.</p>
             <p><strong>Expected:</strong> Dashboard page loaded.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='DashboardIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='DashboardIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10133ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/NAV-01-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/NAV-01-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1052,25 +919,19 @@ Wait timed out after 10133ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">NAV-02</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Verify Sidebar Navigation - Sign Detection page load</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is logged in.</p>
             <p><strong>Expected:</strong> Sign Language Detection Workspace page loads correctly.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='CameraAltIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='CameraAltIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10110ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/NAV-02-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/NAV-02-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1079,25 +940,19 @@ Wait timed out after 10110ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">NAV-03</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Verify Sidebar Navigation - Text to Speech page load</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is logged in.</p>
             <p><strong>Expected:</strong> Text to Speech Playground page loads successfully.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='RecordVoiceOverIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='RecordVoiceOverIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10119ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/NAV-03-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/NAV-03-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1106,25 +961,19 @@ Wait timed out after 10119ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">NAV-04</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Verify Sidebar Navigation - Live Translate page load</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is logged in.</p>
             <p><strong>Expected:</strong> Live Translation Workspace loads.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='TranslateIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='TranslateIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10112ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/NAV-04-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/NAV-04-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1133,25 +982,19 @@ Wait timed out after 10112ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">NAV-05</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Verify Sidebar Navigation - Learning Hub page load</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is logged in.</p>
             <p><strong>Expected:</strong> Vocabulary Learning Hub page loads.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='SchoolIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='SchoolIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10102ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/NAV-05-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/NAV-05-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1160,25 +1003,19 @@ Wait timed out after 10102ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">NAV-06</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Verify Sidebar Navigation - Emergency SOS page load</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is logged in.</p>
             <p><strong>Expected:</strong> SOS Emergency Control page loads.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='SmsFailedIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='SmsFailedIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10109ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/NAV-06-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/NAV-06-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1187,25 +1024,19 @@ Wait timed out after 10109ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">NAV-07</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Verify Sidebar Navigation - Prediction History page load</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is logged in.</p>
             <p><strong>Expected:</strong> Prediction Log Archives page loads.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='HistoryIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='HistoryIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10104ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/NAV-07-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/NAV-07-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1214,25 +1045,19 @@ Wait timed out after 10104ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">NAV-08</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Verify Sidebar Navigation - Preferences Settings page load</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is logged in.</p>
             <p><strong>Expected:</strong> System Preferences Settings page loads.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='SettingsIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='SettingsIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10103ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/NAV-08-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/NAV-08-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1241,25 +1066,19 @@ Wait timed out after 10103ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">NAV-09</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Verify Browser Navigation - Dashboard to settings and back</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on settings page.</p>
             <p><strong>Expected:</strong> Browser back navigation triggers React Router history update successfully.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='DashboardIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='DashboardIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10095ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/NAV-09-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/NAV-09-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1268,24 +1087,19 @@ Wait timed out after 10095ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">NAV-10</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Verify Browser Navigation - Settings page forward restore</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User navigated back to dashboard.</p>
             <p><strong>Expected:</strong> Browser forward navigation restores Settings page layout.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Wait timed out after 5100ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/NAV-10-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/NAV-10-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1294,25 +1108,19 @@ Wait timed out after 10095ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">NAV-11</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Verify Protected Route - Sign Detection page logout redirect</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User logs out.</p>
             <p><strong>Expected:</strong> Guard intercepts unauthenticated user.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='ExitToAppIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='ExitToAppIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10084ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/NAV-11-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/NAV-11-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1405,24 +1213,19 @@ Wait timed out after 10084ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">RBAC-01</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Standard User Sidebar View (Admin Panel hidden)</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Log in as normal user.</p>
             <p><strong>Expected:</strong> Admin panel sidebar link is hidden from standard users.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Wait timed out after 5109ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/RBAC-01-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/RBAC-01-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1431,24 +1234,19 @@ Wait timed out after 10084ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">RBAC-02</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Standard User Route Restriction (Admin URL direct access blocked)</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is logged in as standard user.</p>
             <p><strong>Expected:</strong> Unauthorized standard user is redirected away from admin panel back to dashboard.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Wait timed out after 5138ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/RBAC-02-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/RBAC-02-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1457,25 +1255,19 @@ Wait timed out after 10084ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">RBAC-03</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Admin User login and welcome text</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Log in as admin user.</p>
             <p><strong>Expected:</strong> Admin logs in successfully and page banner matches admin identifier.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='ExitToAppIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='ExitToAppIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10098ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/RBAC-03-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/RBAC-03-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1484,24 +1276,19 @@ Wait timed out after 10098ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">RBAC-04</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Admin User Sidebar View (Admin Panel visible)</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Admin user is logged in.</p>
             <p><strong>Expected:</strong> Admin panel sidebar navigation link is loaded and visible to administrators.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Admin Panel link was not found in sidebar for administrator role.</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/RBAC-04-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/RBAC-04-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1510,25 +1297,19 @@ Wait timed out after 10098ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">RBAC-05</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Admin User direct route access allowed to /admin</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Admin user is logged in.</p>
             <p><strong>Expected:</strong> Admin panel dashboard loads successfully at /admin containing control widgets.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='SupervisorAccountIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='SupervisorAccountIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10101ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/RBAC-05-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/RBAC-05-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1537,25 +1318,19 @@ Wait timed out after 10101ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FORM-01</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Emergency Contact - Relationship empty check</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Admin is on SOS Control page and opens Add Contact.</p>
             <p><strong>Expected:</strong> A warning is displayed about required relationship.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='SmsFailedIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='SmsFailedIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10096ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol></ol>
+              <ol><li>Cleaning up existing contacts. Found 2 contacts.</li></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FORM-01-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FORM-01-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1564,25 +1339,19 @@ Wait timed out after 10096ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FORM-02</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Emergency Contact - Name empty check</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Contact dialog is open.</p>
             <p><strong>Expected:</strong> Validation blocks submit due to empty name.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//button[contains(., 'Cancel')]"}. Details: Waiting for element to be located By(xpath, //button[contains(., 'Cancel')])
-Wait timed out after 10071ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FORM-02-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FORM-02-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1591,25 +1360,19 @@ Wait timed out after 10071ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FORM-03</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Emergency Contact - Phone empty check</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Contact dialog is open.</p>
             <p><strong>Expected:</strong> Validation blocks submit due to empty phone.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//button[contains(., 'Cancel')]"}. Details: Waiting for element to be located By(xpath, //button[contains(., 'Cancel')])
-Wait timed out after 10073ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FORM-03-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FORM-03-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1618,25 +1381,19 @@ Wait timed out after 10073ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FORM-04</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Emergency Contact - Invalid Phone format validation (No + prefix)</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Contact dialog is open.</p>
             <p><strong>Expected:</strong> System warning displays detailing that country code prefix + is missing.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//button[contains(., 'Cancel')]"}. Details: Waiting for element to be located By(xpath, //button[contains(., 'Cancel')])
-Wait timed out after 10089ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FORM-04-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FORM-04-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1645,25 +1402,19 @@ Wait timed out after 10089ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FORM-05</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Emergency Contact - Invalid Phone format validation (Too short)</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Contact dialog is open.</p>
             <p><strong>Expected:</strong> Warning displays about short phone length constraints.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//button[contains(., 'Cancel')]"}. Details: Waiting for element to be located By(xpath, //button[contains(., 'Cancel')])
-Wait timed out after 10089ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FORM-05-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FORM-05-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1672,25 +1423,19 @@ Wait timed out after 10089ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FORM-06</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Emergency Contact - Invalid Phone format validation (Letters in phone)</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Contact dialog is open.</p>
             <p><strong>Expected:</strong> Warning highlights that phone number must contain numbers only.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//button[contains(., 'Cancel')]"}. Details: Waiting for element to be located By(xpath, //button[contains(., 'Cancel')])
-Wait timed out after 10071ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FORM-06-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FORM-06-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1699,25 +1444,19 @@ Wait timed out after 10071ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FORM-07</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Emergency Contact - Limit of 5 Boundary Testing</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Contact list is displayed.</p>
             <p><strong>Expected:</strong> Contact list max capacity limits users to 5 entries.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//button[contains(., 'Cancel')]"}. Details: Waiting for element to be located By(xpath, //button[contains(., 'Cancel')])
-Wait timed out after 10057ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol></ol>
+              <ol><li>Boundary limit verified. Add Button disabled.</li></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FORM-07-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FORM-07-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1726,25 +1465,19 @@ Wait timed out after 10057ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FORM-08</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Emergency Contact - Duplicate Submission Prevention</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Standard contact list.</p>
             <p><strong>Expected:</strong> System warning flags duplicate numbers.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Waiting for alert to be present
-Wait timed out after 5103ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FORM-08-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FORM-08-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1753,25 +1486,19 @@ Wait timed out after 5103ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FORM-09</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Emergency Contact - Deletion modal confirmation cancel check</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Contacts tab is open.</p>
             <p><strong>Expected:</strong> Cancel delete retains existing contact.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Waiting for alert to be present
-Wait timed out after 5103ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FORM-09-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FORM-09-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1780,25 +1507,19 @@ Wait timed out after 5103ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FORM-10</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Emergency Contact - Delete and verify list count decrement</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Contacts list is open.</p>
             <p><strong>Expected:</strong> Contact is successfully deleted and count is updated.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Waiting for alert to be present
-Wait timed out after 5107ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FORM-10-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FORM-10-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1807,25 +1528,19 @@ Wait timed out after 5107ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">UI-01</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Dashboard Welcome header rendering</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Admin user is logged in.</p>
             <p><strong>Expected:</strong> Welcome title displays for logged in user.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='DashboardIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='DashboardIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10106ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/UI-01-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/UI-01-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1834,24 +1549,19 @@ Wait timed out after 10106ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">UI-02</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Metric Cards - Gestures recognized widget load</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on control panel dashboard.</p>
             <p><strong>Expected:</strong> Dashboard renders gestures recognized metric counter.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Gestures Recognized card widget missing.</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/UI-02-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/UI-02-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1860,24 +1570,19 @@ Wait timed out after 10106ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">UI-03</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Metric Cards - Emergency alerts widget load</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on dashboard.</p>
             <p><strong>Expected:</strong> Dashboard renders active SOS warnings counter.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Emergency alerts card widget missing.</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/UI-03-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/UI-03-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1886,24 +1591,19 @@ Wait timed out after 10106ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">UI-04</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Metric Cards - Vocabulary learned widget load</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on dashboard.</p>
             <p><strong>Expected:</strong> Dashboard renders total vocabulary cards checked counter.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Vocabulary learned card widget missing.</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/UI-04-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/UI-04-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1912,25 +1612,19 @@ Wait timed out after 10106ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">UI-05</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">History Log - table structure</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on prediction history page.</p>
             <p><strong>Expected:</strong> Logs table headers are properly rendered.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='HistoryIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='HistoryIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10091ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol></ol>
+              <ol><li>Seeding mock history log entry to prevent query empty-state timeouts</li><li>Refreshing History page to pull new record</li></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/UI-05-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/UI-05-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1939,24 +1633,19 @@ Wait timed out after 10091ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">UI-06</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">History Log - search filtering</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on prediction history page.</p>
             <p><strong>Expected:</strong> Logs are dynamically filtered.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Wait timed out after 5151ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/UI-06-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/UI-06-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1965,25 +1654,19 @@ Wait timed out after 10091ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">UI-07</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">History Log - search clearing</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Search query is active.</p>
             <p><strong>Expected:</strong> Original row items restore after search clearing.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//input[@placeholder='Search history log...']"}. Details: Waiting for element to be located By(xpath, //input[@placeholder='Search history log...'])
-Wait timed out after 10071ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/UI-07-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/UI-07-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -1992,25 +1675,19 @@ Wait timed out after 10071ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">UI-08</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">History Log - Search query with zero matches displays empty state</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User on history logs.</p>
             <p><strong>Expected:</strong> History logs table displays zero rows or fallback warning text.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//input[@placeholder='Search history log...']"}. Details: Waiting for element to be located By(xpath, //input[@placeholder='Search history log...'])
-Wait timed out after 10063ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/UI-08-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/UI-08-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -2019,25 +1696,19 @@ Wait timed out after 10063ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">UI-09</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Settings Page - Theme switch appearance toggle (light mode)</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on settings page.</p>
             <p><strong>Expected:</strong> Dynamic class light mode is applied to DOM element html.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='SettingsIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='SettingsIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10054ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/UI-09-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/UI-09-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -2046,25 +1717,19 @@ Wait timed out after 10054ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">UI-10</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Settings Page - Theme switch appearance toggle (dark mode restore)</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Theme light mode is active.</p>
             <p><strong>Expected:</strong> Theme dark mode restores.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"css selector","value":".MuiSwitch-root"}. Details: Waiting for element to be located By(css selector, .MuiSwitch-root)
-Wait timed out after 10058ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/UI-10-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/UI-10-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -2073,25 +1738,19 @@ Wait timed out after 10058ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FEAT-01</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Sign Detection - Camera View Placeholder Render</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on Sign Detection page.</p>
             <p><strong>Expected:</strong> AI sign workspace displays video placeholder element.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='CameraAltIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='CameraAltIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10077ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol></ol>
+              <ol><li>Using mock fallback camera container representation.</li></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FEAT-01-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FEAT-01-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -2100,25 +1759,19 @@ Wait timed out after 10077ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FEAT-02</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Sign Detection - Gestures select dropdown check</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Sign Detection is open.</p>
             <p><strong>Expected:</strong> Voice and translation controls are visible on sign detection page.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Waiting for element to be located By(xpath, //*[contains(text(), 'VOICE ENGINE') or contains(text(), 'SPEECH CONTROLLER')])
-Wait timed out after 5152ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FEAT-02-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FEAT-02-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -2169,25 +1822,19 @@ Wait timed out after 5152ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FEAT-05</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Text-to-Speech - Textarea input character count validation</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on Text-to-Speech page.</p>
             <p><strong>Expected:</strong> Textarea is rendered and accepts custom input.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='RecordVoiceOverIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='RecordVoiceOverIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10090ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FEAT-05-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FEAT-05-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -2196,25 +1843,19 @@ Wait timed out after 10090ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FEAT-06</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Text-to-Speech - Play speed slider default value verification</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User on Text to Speech page.</p>
             <p><strong>Expected:</strong> Default speed slider displays 1.0x text label.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">no such element: Unable to locate element: {"method":"xpath","selector":"//*[contains(text(), 'SPEED RATE')]"}
-  (Session info: chrome=150.0.7871.114)</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FEAT-06-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FEAT-06-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -2223,25 +1864,19 @@ Wait timed out after 10090ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FEAT-07</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Text-to-Speech - Clear text button clears textarea</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> Textarea contains sample values.</p>
             <p><strong>Expected:</strong> TextArea fields values are correctly reset.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">no such element: Unable to locate element: {"method":"css selector","selector":"textarea"}
-  (Session info: chrome=150.0.7871.114)</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FEAT-07-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FEAT-07-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -2250,25 +1885,19 @@ Wait timed out after 10090ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FEAT-08</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Live Translate - Language swap button functionality</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on Live Translate page.</p>
             <p><strong>Expected:</strong> Languages selections swap roles.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='TranslateIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='TranslateIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10103ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FEAT-08-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FEAT-08-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -2277,25 +1906,19 @@ Wait timed out after 10103ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">FEAT-09</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Learning Hub - category toggle buttons check</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is on Learning page.</p>
             <p><strong>Expected:</strong> Selected category filter button updates styling.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='SchoolIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='SchoolIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10098ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/FEAT-09-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/FEAT-09-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -2325,24 +1948,19 @@ Wait timed out after 10098ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">SEC-01</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Sensitive cache - tokenized credentials validation</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User is logged in.</p>
             <p><strong>Expected:</strong> Storage uses tokens, ensuring passwords details are never cached in cleartext.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">User session credentials missing from cache.</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/SEC-01-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/SEC-01-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
@@ -2382,7 +2000,7 @@ Wait timed out after 10098ms</span></p>
             <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
-              <ol><li>Active stored theme choice: null</li></ol>
+              <ol><li>Active stored theme choice: dark</li></ol>
             </div>
             
           </div>
@@ -2414,25 +2032,19 @@ Wait timed out after 10098ms</span></p>
         <td>
           <div class="test-meta">
             <span class="test-id">SEC-05</span>
-            <span class="badge badge-fail">FAIL</span>
-            <span class="badge badge-error" style="margin-left: 8px;">HIGH</span>
+            <span class="badge badge-pass">PASS</span>
+            
           </div>
           <h3 class="test-name">Cookie/Storage cleanup state on logout check</h3>
           <div class="test-details">
             <p><strong>Preconditions:</strong> User triggers logout.</p>
             <p><strong>Expected:</strong> Client local cache resets on session exit.</p>
-            <p><strong>Actual:</strong> <span class="text-fail">Failed to locate element using: {"using":"xpath","value":"//*[@data-testid='ExitToAppIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')]"}. Details: Waiting for element to be located By(xpath, //*[@data-testid='ExitToAppIcon']/ancestor::*[contains(@class, 'MuiListItemButton-root')])
-Wait timed out after 10105ms</span></p>
+            <p><strong>Actual:</strong> <span class="text-pass">Completed successfully</span></p>
             <div class="steps-box">
               <strong>Steps Executed:</strong>
               <ol></ol>
             </div>
             
-        <div class="screenshot-container">
-          <p><strong>Failure Screenshot:</strong></p>
-          <img class="screenshot-img" src="screenshots/SEC-05-failed.png" alt="Failure Screenshot" onclick="openModal('screenshots/SEC-05-failed.png')" />
-        </div>
-      
           </div>
         </td>
       </tr>
