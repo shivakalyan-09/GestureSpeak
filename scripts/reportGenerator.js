@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 export function generateReportHtml(parsedData, outDir) {
-  const { stats, metrics, filename } = parsedData;
+  const { stats, metrics, testCases, filename } = parsedData;
   const baseName = path.parse(filename).name;
   
   // Mapping e.g. Web_Test_Report -> web-report
@@ -59,6 +59,29 @@ export function generateReportHtml(parsedData, outDir) {
     </div>
 
     ${metricsHtml}
+    
+    <h2>Test Cases</h2>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px; background: #21262d; border-radius: 8px; overflow: hidden;">
+      <thead>
+        <tr>
+          <th style="padding: 15px; text-align: left; border-bottom: 1px solid #30363d; color: #8b949e; text-transform: uppercase; font-size: 13px;">Test Name</th>
+          <th style="padding: 15px; text-align: left; border-bottom: 1px solid #30363d; color: #8b949e; text-transform: uppercase; font-size: 13px;">Outcome</th>
+          ${testCases && testCases.length > 0 && testCases[0].duration ? '<th style="padding: 15px; text-align: left; border-bottom: 1px solid #30363d; color: #8b949e; text-transform: uppercase; font-size: 13px;">Duration</th>' : ''}
+        </tr>
+      </thead>
+      <tbody>
+        ${(testCases || []).map(tc => {
+          let color = tc.outcome === 'PASS' ? '#3fb950' : (tc.outcome === 'FAIL' ? '#ff7b72' : '#d29922');
+          return `
+            <tr>
+              <td style="padding: 15px; border-bottom: 1px solid #30363d;">${tc.name}</td>
+              <td style="padding: 15px; border-bottom: 1px solid #30363d; color: ${color}; font-weight: bold;">${tc.outcome}</td>
+              ${tc.duration ? `<td style="padding: 15px; border-bottom: 1px solid #30363d;">${tc.duration}s</td>` : ''}
+            </tr>
+          `;
+        }).join('')}
+      </tbody>
+    </table>
     
     <div style="margin-top: 30px; text-align: center;">
       <a href="index.html">← Back to Dashboard</a>

@@ -17,6 +17,7 @@ export async function parseExcel(filePath) {
 
   const filename = path.basename(filePath);
   let metrics = {};
+  const testCases = [];
 
   if (filename.includes('Performance')) {
     // Custom logic for Performance Report
@@ -76,6 +77,18 @@ export async function parseExcel(filePath) {
     stats.passRate = successRate;
     stats.status = sRate > 95 ? "OPTIMAL" : "WARNING";
 
+    const tcSheet = workbook.getWorksheet('Test Cases');
+    if (tcSheet) {
+      tcSheet.eachRow((row, rowNumber) => {
+        if (rowNumber === 1) return;
+        testCases.push({
+          name: row.getCell(1).text || `Test ${rowNumber}`,
+          outcome: row.getCell(3).text || 'UNKNOWN',
+          duration: row.getCell(4).text || '-'
+        });
+      });
+    }
+
   } else {
     // General parsing for Web, Android, Security tests
     // Check if 'Test Cases' sheet exists
@@ -102,6 +115,12 @@ export async function parseExcel(filePath) {
       else if (outcome === "FAIL") stats.failed++;
       else if (outcome === "SKIP") stats.skipped++;
       else stats.passed++; // Default to passed if unable to parse mock
+      
+      const tcName = row.getCell(1).text || row.getCell(2).text || `Test Case ${rowNumber}`;
+      testCases.push({
+        name: tcName,
+        outcome: outcome || "PASS"
+      });
     });
 
     if (stats.total > 0) {
@@ -111,5 +130,5 @@ export async function parseExcel(filePath) {
     }
   }
 
-  return { stats, metrics, filename };
+  return { stats, metrics, testCases, filename };
 }
