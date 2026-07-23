@@ -56,14 +56,23 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Create Mock HTML Reports
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: './gesturespeak-frontend/package-lock.json'
+
+      - name: Build Web Application
+        working-directory: ./gesturespeak-frontend
         run: |
-          mkdir -p public-pages
-          
-          # Create a placeholder web application index
-          cat << 'EOF' > public-pages/index.html
-          <!DOCTYPE html><html><head><title>GestureSpeak AI</title><style>body{font-family:sans-serif;text-align:center;margin-top:20%;background:#0f172a;color:white;}</style></head><body><h1>Welcome to GestureSpeak AI</h1><p>This is the deployed web application on GitHub Pages.</p></body></html>
-          EOF
+          npm ci
+          npm run build
+
+      - name: Prepare Pages Directory and Reports
+        run: |
+          # Copy the built React app to public-pages
+          cp -r gesturespeak-frontend/dist public-pages
           
           # Create Web E2E Report
           cat << 'EOF' > public-pages/web-e2e-report.html
