@@ -44,7 +44,7 @@ export default function CameraSignDetection({
         );
         const handLandmarkerInstance = await HandLandmarker.createFromOptions(vision, {
           baseOptions: {
-            modelAssetPath: "/models/hand_landmarker.task",
+            modelAssetPath: import.meta.env.BASE_URL + "models/hand_landmarker.task",
             delegate: "GPU"
           },
           runningMode: "VIDEO",

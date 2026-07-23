@@ -37,7 +37,7 @@ export async function loadSignModel() {
       throw new Error("tflite library is not loaded from CDN.");
     }
     // Attempt to load the client-side TFLite model
-    tfliteModel = await tflite.loadTFLiteModel('/models/sign_lstm_50frames.tflite');
+    tfliteModel = await tflite.loadTFLiteModel(import.meta.env.BASE_URL + 'models/sign_lstm_50frames.tflite');
     console.log("TensorFlow Lite sign model loaded successfully.");
   } catch (error) {
     console.warn("Could not initialize TensorFlow Lite WASM model directly in browser.", error);
