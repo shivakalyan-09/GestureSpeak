@@ -22,7 +22,15 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Dependencies
+      - name: Install Frontend Dependencies
+        working-directory: ./gesturespeak-frontend
+        run: npm install
+
+      - name: Build Web Application
+        working-directory: ./gesturespeak-frontend
+        run: npm run build
+
+      - name: Install Script Dependencies
         working-directory: ./scripts
         run: npm install
 
@@ -30,11 +38,16 @@ jobs:
         working-directory: ./scripts
         run: npm start
 
+      - name: Package Reports into Web App
+        run: |
+          mkdir -p gesturespeak-frontend/dist/reports
+          cp -r reports/html/* gesturespeak-frontend/dist/reports/
+
       - name: Upload HTML Reports Artifact
         uses: actions/upload-artifact@v4
         with:
           name: html-reports
-          path: reports/html/
+          path: gesturespeak-frontend/dist/reports/
 
       - name: Upload Original Excel Reports Artifact
         uses: actions/upload-artifact@v4
@@ -48,7 +61,7 @@ jobs:
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: reports/html/
+          path: gesturespeak-frontend/dist/
 
   deploy:
     environment:

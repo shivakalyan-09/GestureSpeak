@@ -182,7 +182,7 @@ async function run() {
         <td>${skipStr}</td>
         <td>${r.stats.passRate}</td>
         <td>${statusDisplay}</td>
-        <td><a href="https://shivakalyan-09.github.io/GestureSpeak/${r.reportUrl}">View HTML Report</a></td>
+        <td><a href="https://shivakalyan-09.github.io/GestureSpeak/reports/${r.reportUrl}">View HTML Report</a></td>
       </tr>`;
     }).join('')}
   </tbody>
