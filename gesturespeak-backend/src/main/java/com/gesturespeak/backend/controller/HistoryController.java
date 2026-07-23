@@ -65,12 +65,20 @@ public class HistoryController {
     @PostMapping
     public ResponseEntity<?> saveHistory(@RequestBody Map<String, Object> body) {
         String uid = getAuthUserId();
-        
+
+        // INP-003: Validate field lengths
+        String original   = (String) body.getOrDefault("original", "");
+        String translated = (String) body.getOrDefault("translated", "");
+        if (original.length() > 2000 || translated.length() > 2000) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Text fields must be 2000 characters or fewer"));
+        }
+
         HistoryEntry entry = new HistoryEntry();
         entry.setId(UUID.randomUUID().toString());
         entry.setUserId(uid);
-        entry.setOriginal((String) body.getOrDefault("original", ""));
-        entry.setTranslated((String) body.getOrDefault("translated", ""));
+        entry.setOriginal(original);
+        entry.setTranslated(translated);
         entry.setType((String) body.getOrDefault("type", ""));
         entry.setMode((String) body.getOrDefault("mode", ""));
         
@@ -119,16 +127,9 @@ public class HistoryController {
                 entry.getOriginal() + " -> " + entry.getTranslated()
         );
 
-        // Audit Logging to Backend Logs
-        System.out.println("================= BACKEND TRANSLATION HISTORY LOG ================= ");
-        System.out.println("User ID: " + uid);
-        System.out.println("Original Text: " + entry.getOriginal());
-        System.out.println("Translated Text: " + entry.getTranslated());
-        System.out.println("Type: " + entry.getType());
-        System.out.println("Mode: " + entry.getMode());
-        System.out.println("Confidence: " + entry.getConfidence());
-        System.out.println("Timestamp: " + entry.getTimestamp());
-        System.out.println("===================================================================");
+        // SDE-002: Log only non-sensitive metadata – never log user content (original/translated text)
+        System.out.printf("[HistoryController] Translation saved: type=%s, mode=%s, confidence=%.2f%n",
+                entry.getType(), entry.getMode(), entry.getConfidence());
 
         if (firebaseService.isFirebaseInitialized()) {
             try {

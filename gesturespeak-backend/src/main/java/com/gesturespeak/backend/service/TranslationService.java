@@ -182,10 +182,8 @@ public class TranslationService {
         String src = (sourceLang == null) ? "en" : sourceLang.toLowerCase().trim();
         String tgt = (targetLang == null) ? "te" : targetLang.toLowerCase().trim();
 
-        System.out.println("================= BACKEND TRANSLATION SERVICE ================= ");
-        System.out.println("Input Text: " + cleanedText);
-        System.out.println("Source Language: " + src);
-        System.out.println("Target Language: " + tgt);
+        // SDE-003: Log only metadata – never log user-supplied text content
+        System.out.printf("[TranslationService] Translate request: src=%s, tgt=%s%n", src, tgt);
 
         if (src.equals(tgt)) {
             System.out.println("Output (No swap needed): " + cleanedText);
@@ -196,8 +194,7 @@ public class TranslationService {
         // Check local dictionary first
         String mockOutput = getMockTranslation(cleanedText, tgt, src);
         if (!mockOutput.equalsIgnoreCase(cleanedText)) {
-            System.out.println("Local Dictionary Match: " + mockOutput);
-            System.out.println("==========================================================");
+            System.out.printf("[TranslationService] Dictionary match found for lang pair %s->%s%n", src, tgt);
             return mockOutput;
         }
 
@@ -208,9 +205,8 @@ public class TranslationService {
                     src,
                     tgt
             );
-            System.out.println("Translation Request: " + url);
+            System.out.printf("[TranslationService] Calling external API for lang pair %s->%s%n", src, tgt);
             String response = restTemplate.getForObject(url, String.class);
-            System.out.println("Translation Response Payload: " + response);
 
             JsonNode root = objectMapper.readTree(response);
             int status = root.path("responseStatus").asInt();
@@ -218,8 +214,7 @@ public class TranslationService {
                 String translated = root.path("responseData").path("translatedText").asText().trim();
                 // Check if API returned non-empty and non-identical translation
                 if (!translated.isEmpty() && !translated.equalsIgnoreCase(cleanedText)) {
-                    System.out.println("API Output: " + translated);
-                    System.out.println("==========================================================");
+                    System.out.printf("[TranslationService] API translation succeeded for %s->%s%n", src, tgt);
                     return translated;
                 } else {
                     System.out.println("API returned empty/untranslated text.");
@@ -228,11 +223,10 @@ public class TranslationService {
                 System.out.println("API Status non-200 (" + status + ").");
             }
         } catch (Exception e) {
-            System.err.println("API connection failure: " + e.getMessage());
+            System.err.println("[TranslationService] External API connection failure: " + e.getMessage());
         }
 
-        System.out.println("Mock Fallback (No Match Found): " + cleanedText);
-        System.out.println("==========================================================");
+        System.out.printf("[TranslationService] No translation found for lang pair %s->%s%n", src, tgt);
 
         if (src.equals(tgt)) {
             return cleanedText;

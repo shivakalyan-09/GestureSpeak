@@ -3,6 +3,9 @@ gesturespeak-backend/target/
 gesturespeak-backend/.flattened-pom.xml
 gesturespeak-backend/dependency-reduced-pom.xml
 
+# Firebase Service Account Key – NEVER commit real credentials
+gesturespeak-backend/src/main/resources/firebase-service-account.json
+
 # Node
 node_modules/
 gesturespeak-frontend/node_modules/

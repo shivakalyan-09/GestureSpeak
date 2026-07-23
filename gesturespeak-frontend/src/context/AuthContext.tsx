@@ -80,7 +80,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         uid,
         email,
         username: email.split('@')[0],
-        role: email === 'admin@gesturespeak.com' ? 'ADMIN' : 'USER'
+        role: 'USER'   // Backend assigns roles via Firebase custom claims – never by email
       });
     }
   };
