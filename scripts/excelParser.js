@@ -116,7 +116,7 @@ export async function parseExcel(filePath) {
       else if (outcome === "SKIP") stats.skipped++;
       else stats.passed++; // Default to passed if unable to parse mock
       
-      const tcName = row.getCell(1).text || row.getCell(2).text || `Test Case ${rowNumber}`;
+      const tcName = row.getCell(3).text || row.getCell(2).text || row.getCell(1).text || `Test Case ${rowNumber}`;
       testCases.push({
         name: tcName,
         outcome: outcome || "PASS"
